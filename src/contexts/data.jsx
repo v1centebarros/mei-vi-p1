@@ -6,17 +6,27 @@ export const DataContext = createContext({});
 export const DataProvider = ({children}) => {
 
     const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await d3.csv('DETI_Dados_Candidatos-1.csv');
-            setData(()=> data);
-        }
+            setIsLoading(true);
+            try {
+                console.log("Fetching Data")
+                const data = await d3.csv('fatalities_isr_pse_conflict_2000_to_2023.csv');
+                setData(data);
+                console.log("Data Fetched")
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+            setIsLoading(false);
+        };
         fetchData();
     }, []);
 
+
     return (
-        <DataContext.Provider value={{data}}>
+        <DataContext.Provider value={{data, isLoading}}>
             {children}
         </DataContext.Provider>
     );

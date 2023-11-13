@@ -1,15 +1,43 @@
-import ScatterPlot from "../../components/plot/scatterPlot/scatterPlot.jsx";
+import {useData} from "../../contexts/data.jsx";
+import {useEffect} from "react";
+import {ScatterPlot} from "../../components/plot/scatterPlot/index.js";
+import {Histogram} from "../../components/plot/histogram/index.js";
+import {ForcePieChart} from "../../components/plot/forcePieChart/index.js";
+import {GunfirePieChart} from "../../components/plot/gunfirePieChart/index.js";
 
 export const Stats = (props) => {
-  const data = [
-    { x: 1, y: 2 },
-    { x: 2, y: 3 },
-    { x: 3, y: 5 },
-    { x: 4, y: 4 },
-    { x: 5, y: 7 },
-  ];
+    const {data} = useData();
 
-  return <>
-    <ScatterPlot width={500} height={500} data={data} />
-  </>
+    return <div className={"grid grid-cols-2 m-2 gap-2"}>
+        <div className={"card bg-base-100"}>
+            <div className={"card-body"}>
+                <div className={"card-title"}>Scatter Plot</div>
+                <ScatterPlot data={data} />
+            </div>
+        </div>
+
+        <div className={"card bg-base-100 gap-4"}>
+            <div className={"card-body"}>
+                <div className={"card-title"}>Scatter Plot</div>
+                <Histogram data={data} />
+            </div>
+        </div>
+
+
+        <div className={"card bg-base-100 gap-4"}>
+            <div className={"card-body"}>
+                <div className={"card-title"}>Scatter Plot</div>
+                <ForcePieChart data={data} selectedYear={2013}/>
+            </div>
+        </div>
+
+        <div className={"card bg-base-100 gap-4"}>
+            <div className={"card-body"}>
+                <div className={"card-title"}>Scatter Plot</div>
+                <GunfirePieChart data={data} selectedYear={2013}/>
+            </div>
+        </div>
+
+
+    </div>
 };

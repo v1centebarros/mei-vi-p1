@@ -1,9 +1,11 @@
 import Router from "./utils/Router.jsx";
-import {DataProvider} from "./contexts/data.jsx";
+import {DataProvider, useData} from "./contexts/data.jsx";
 
 const App = () => {
+    const {isLoading} = useData();
     return <DataProvider>
-        <Router/>
+        {isLoading && <div>Loading...</div>}
+        {!isLoading && <Router/>}
     </DataProvider>
 };
 
