@@ -1,65 +1,90 @@
-import {useRef} from "react";
+import {useEffect, useState} from "react";
 import {Card} from "../../components/home/card/index.js";
+import {Table} from "../../components/plot/table/index.js";
+import {useData} from "../../contexts/data.jsx";
 
 export const Home = (props) => {
 
-    const citizenshipRef = useRef()
-    const genderRef = useRef()
-    const killedByRef = useRef()
-    const injuryRef = useRef()
+
+    const [citizenship, setCitizenship] = useState("all")
+    const [gender, setGender] = useState("all")
+    const [killedBy, setKilledBy] = useState("all")
+    const [injury, setInjury] = useState("all")
+
+
+    const {data} = useData()
+    const [filteredData, setFilteredData] = useState(data)
 
     const clearFilters = () => {
-        citizenshipRef.current.value = "all"
-        genderRef.current.value = "all"
-        killedByRef.current.value = "all"
-        injuryRef.current.value = "all"
+        setCitizenship("all")
+        setGender("all")
+        setKilledBy("all")
+        setInjury("all")
+        setFilteredData(data)
     }
+
+    const filterByCitizenship = (row) => citizenship === "all" || row.citizenship === citizenship
+    const filterByGender = (row) => gender === "all" || row.gender === gender
+
+    const filterByKilledBy = (row) => killedBy === "all" || row.killed_by === killedBy
+
+    const filterData = () => data && setFilteredData(() => data.filter((row) => filterByCitizenship(row) && filterByGender(row), []))
+
+
+    useEffect(() => {
+        filterData()
+    }, [citizenship, gender])
+
+    useEffect(() => {
+        setFilteredData(() => data)
+    }, [data])
 
 
     return <div className={"grid grid-cols-10 gap-3 p-3"}>
         <div className={"col-span-2 row-span-2 card bg-base-100 shadow"}>
             <div className={"card-body"}>
-                <div className={"card-title mx-auto"}>Filters</div>
-            </div>
-            <div className={"flex flex-col gap-2 m-5"}>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text font-bold text-xl">Citizenship</span>
-                    </label>
-                    <select className="select select-bordered" ref={citizenshipRef}>
-                        <option value={"all"}>All</option>
-                        <option value={"israeli"}>Israeli</option>
-                        <option value={"palestinian"}>Palestinian</option>
-                    </select>
+                <div className={"card-title mx-auto text-3xl"}>Filters</div>
+                <div className={"flex flex-col gap-2 m-5"}>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text font-bold text-xl">Citizenship</span>
+                        </label>
+                        <select className="select select-bordered" onChange={(e) => setCitizenship(e.target.value)}>
+                            <option value={"all"}>All</option>
+                            <option value={"Israeli"}>Israeli</option>
+                            <option value={"Palestinian"}>Palestinian</option>
+                        </select>
 
-                    <label className="label">
-                        <span className="label-text font-bold text-xl">Gender</span>
-                    </label>
-                    <select className="select select-bordered" ref={genderRef}>
-                        <option value={"all"}>All</option>
-                        <option value={"male"}>Male</option>
-                        <option value={"female"}>Female</option>
-                    </select>
+                        <label className="label">
+                            <span className="label-text font-bold text-xl">Gender</span>
+                        </label>
+                        <select className="select select-bordered" onChange={(e) => setGender(e.target.value)}>
+                            <option value={"all"}>All</option>
+                            <option value={"M"}>Male</option>
+                            <option value={"F"}>Female</option>
+                        </select>
 
 
-                    <label className="label">
-                        <span className="label-text font-bold text-xl">Killed By</span>
-                    </label>
-                    <select className="select select-bordered" ref={killedByRef}>
-                        <option value={"all"}>All</option>
-                    </select>
+                        <label className="label">
+                            <span className="label-text font-bold text-xl">Killed By</span>
+                        </label>
+                        <select className="select select-bordered" onChange={(e) => setKilledBy(e.target.value)}>
+                            <option value={"all"}>All</option>
+                        </select>
 
-                    <label className="label">
-                        <span className="label-text font-bold text-xl">Killed By</span>
-                    </label>
-                    <select className="select select-bordered" ref={injuryRef}>
-                        <option value={"all"}>Injury</option>
-                    </select>
+                        <label className="label">
+                            <span className="label-text font-bold text-xl">Killed By</span>
+                        </label>
+                        <select className="select select-bordered" onChange={(e) => setInjury(e.target.value)}>
+                            <option value={"all"}>Injury</option>
+                        </select>
+                    </div>
+
+                    <button className={"btn btn-primary btn-block"}
+                            onClick={clearFilters}
+                    >Clear Filters
+                    </button>
                 </div>
-
-                <button className={"btn btn-primary btn-block"}
-                    onClick={clearFilters}
-                >Clear Filters</button>
             </div>
         </div>
         <Card title={"teste1"}>
@@ -68,8 +93,8 @@ export const Home = (props) => {
         <Card title={"teste2"}>
             {/*PLOT HERE*/}
         </Card>
-        <Card title={"teste3"}>
-            {/*PLOT HERE*/}
+        <Card title={"Data Table"}>
+            <Table data={filteredData}/>
         </Card>
         <Card title={"teste4"}>
             {/*PLOT HERE*/}
