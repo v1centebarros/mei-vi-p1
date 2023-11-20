@@ -1,6 +1,3 @@
-import {useData} from "../../../contexts/data.jsx";
-import {useEffect} from "react";
-
 export const Table = ({data}) => {
 
     const limit = 15
