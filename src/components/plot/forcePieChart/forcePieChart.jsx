@@ -3,11 +3,11 @@ import * as d3 from 'd3';
 
 export const ForcePieChart = ({ data, selectedYear }) => {
   const svgRef = useRef();
-  const width = 500; // Width of the SVG
-  const height = 400; // Height of the SVG
+  const width = 700; // Width of the SVG
+  const height = 300; // Height of the SVG
   const radius = Math.min(width, height) / 2; // Radius of the pie chart
   const legendRectSize = 20; // Defines the size of the legend color box
-  const legendSpacing = 5; // Defines the spacing between legend items
+  const legendSpacing = 10; // Defines the spacing between legend items
 
   useEffect(() => {
     if (!data) return;
@@ -56,7 +56,7 @@ export const ForcePieChart = ({ data, selectedYear }) => {
           const height = legendRectSize + legendSpacing;
           const offset = height * color.domain().length / 2;
           const horz = 2 * radius + 40; // Move to the right side of the pie
-          const vert = i * height - offset;
+          const vert = i * height;
           return `translate(${horz}, ${vert + (height / 2)})`;
         });
 

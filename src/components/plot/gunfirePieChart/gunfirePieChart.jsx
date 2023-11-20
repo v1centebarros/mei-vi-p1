@@ -3,9 +3,11 @@ import * as d3 from 'd3';
 
 export const GunfirePieChart = ({ data, selectedYear }) => {
   const svgRef = useRef();
-  const width = 400; // Width of the SVG
-  const height = 400; // Height of the SVG
+  const width = 700; // Width of the SVG
+  const height = 300; // Height of the SVG
   const radius = Math.min(width, height) / 2; // Radius of the pie chart
+  const legendRectSize = 15; // Defines the size of the legend color box
+  const legendSpacing = 10; // Defines the spacing between legend items
 
   useEffect(() => {
     if (!data) return;
@@ -18,6 +20,9 @@ export const GunfirePieChart = ({ data, selectedYear }) => {
     // Prepare data for the 'Kills by Gunfire' pie chart
     const gunfireData = d3.rollups(yearData, v => v.length, d => d.ammunition)
         .map(([key, value]) => ({ gunfireType: key, count: value }));
+
+    // Color scale
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // Pie function
     const pie = d3.pie().value(d => d.count);
@@ -42,7 +47,7 @@ export const GunfirePieChart = ({ data, selectedYear }) => {
         .data(gunfirePieData)
         .join('path')
         .attr('d', arcGenerator)
-        .attr('fill', (d, i) => d3.schemeCategory10[(i + 10) % 20]);
+        .attr('fill', (d, i) => color(i));
 
     // Draw labels
     g.selectAll('text')
@@ -50,14 +55,47 @@ export const GunfirePieChart = ({ data, selectedYear }) => {
         .join('text')
         .attr('transform', d => `translate(${labelArc.centroid(d)})`)
         .attr('dy', '0.35em')
-        .attr('text-anchor', 'middle')
         .text(d => d.data.gunfireType);
 
+    // Draw legend title
+    svg.append('text')
+        .attr('x', 2 * radius + 200)
+        .attr('y', 0)
+        .attr('dy', '0.35em')
+        .text('Gunfire Type');
+
+    
+    // Legend group, which is translated to the right side of the pie chart
+    const legend = svg.selectAll('.legend')
+        .data(color.domain())
+        .enter()
+        .append('g')
+        .attr('class', 'legend')
+        .attr('transform', function(d, i) {
+          const height = legendRectSize + legendSpacing;
+          const offset = height * color.domain().length / 2;
+          const horz = 2 * radius + 200; // Move to the right side of the pie
+          const vert = i * height;
+          return `translate(${horz}, ${vert + (height / 2)})`;
+        });
+
+    // Draw legend colored rectangles
+    legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', color)
+        .style('stroke', color);
+
+    // Draw legend text
+    legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(d => gunfireData[d].gunfireType);
   }, [data, selectedYear]);
 
   return (
       <svg ref={svgRef} width={width} height={height}>
-        <title>Kills by Gunfire - {selectedYear}</title>
+        <title> Kills by Gunfire - {selectedYear}</title>
       </svg>
   );
 };
