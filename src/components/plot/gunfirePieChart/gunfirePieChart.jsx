@@ -95,7 +95,7 @@ export const GunfirePieChart = ({ data, selectedYear }) => {
 
   return (
       <svg ref={svgRef} width={width} height={height}>
-        <title> Kills by Gunfire - {selectedYear}</title>
+        <title>  Kills by Gunfire - {selectedYear}</title>
       </svg>
   );
 };

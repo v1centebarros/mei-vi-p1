@@ -8,8 +8,8 @@ export const ScatterPlot = ({ data }) => {
         if (!data) return;
 
         // Set the dimensions and margins of the graph
-        const margin = { top: 10, right: 30, bottom: 30, left: 60 },
-            width = 960 - margin.left - margin.right,
+        const margin = { top: 30, right: 30, bottom: 10, left: 60 },
+            width = 800 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
         // Select the SVG element and clear it
@@ -25,7 +25,8 @@ export const ScatterPlot = ({ data }) => {
             d.age = +d.age;
         });
 
-        // Add X axis
+        // Add X axis and legend to label for date of death
+        
         const x = d3.scaleTime()
             .domain(d3.extent(data, d => d.date_of_death))
             .range([0, width]);
@@ -49,9 +50,24 @@ export const ScatterPlot = ({ data }) => {
             .style("fill", "#69b3a2")
             .style("opacity", 0.5);
 
+        // Add labels
+        g.append("text")
+            .attr("transform", `translate(${width / 2},${height + margin.top + 40})`)
+            .style("text-anchor", "middle")
+            .text("Date of Death");
+
+        
+        // Add labels
+        g.append("text")
+            .attr("transform", `translate(-40,${height / 2}) rotate(-90)`)
+            .style("text-anchor", "middle")
+            .text("Age at Death");
+
+
+
     }, [data]);
 
     return (
-        <svg ref={svgRef} width={960} height={500}></svg>
+        <svg ref={svgRef} width={900} height={600}></svg>
     );
 };
