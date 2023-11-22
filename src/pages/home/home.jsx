@@ -33,9 +33,13 @@ export const Home = (props) => {
     const filterData = () => data && setFilteredData(() => data.filter((row) => filterByCitizenship(row) && filterByGender(row), []))
 
 
-    useEffect(() => filterData(), [citizenship, gender])
+    useEffect(() => {
+        filterData()
+    }, [citizenship, gender])
 
-    useEffect(() => setFilteredData(() => data), [data])
+    useEffect(() => {
+        setFilteredData(() => data)
+    }, [data])
 
     return <div className={"grid grid-cols-10 gap-3 p-3"}>
         <div className={"col-span-2 row-span-2 "}>
