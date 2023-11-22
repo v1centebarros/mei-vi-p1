@@ -3,6 +3,7 @@ import {useEffect, useLayoutEffect, useState} from "react";
 export const useDimensions = (targetRef) => {
 
     const getDimensions = () => {
+        console.log(targetRef.current)
         return {
             width: targetRef.current ? targetRef.current.offsetWidth : 0,
             height: targetRef.current ? targetRef.current.offsetHeight : 0

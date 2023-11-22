@@ -6,7 +6,7 @@ export const ResponsiveWrapper = ({children}) => {
     const {width, height} = useDimensions(wrapperRef);
 
     return (
-        <div ref={wrapperRef}>
+        <div ref={wrapperRef} className={"w-full"}>
             {children({width, height})}
         </div>
     );

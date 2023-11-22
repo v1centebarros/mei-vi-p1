@@ -3,6 +3,8 @@ import {Card} from "../../components/home/card/index.js";
 import {Table} from "../../components/plot/table/index.js";
 import {useData} from "../../contexts/data.jsx";
 import {DeathLinePlot} from "../../components/plot/deathLinePlot/index.js";
+import {ResponsiveWrapper} from "../../components/responsiveWrapper/index.js";
+import {SimpleLinePlot} from "../../components/plot/simpleLinePlot/index.js";
 
 export const Home = (props) => {
 
@@ -40,7 +42,18 @@ export const Home = (props) => {
         setFilteredData(() => data)
     }, [data])
 
-
+    const mockData = [
+        {x: 1, y: 90},
+        {x: 2, y: 12},
+        {x: 3, y: 34},
+        {x: 4, y: 53},
+        {x: 5, y: 52},
+        {x: 6, y: 9},
+        {x: 7, y: 18},
+        {x: 8, y: 78},
+        {x: 9, y: 28},
+        {x: 10, y: 34},
+    ]
     return <div className={"grid grid-cols-10 gap-3 p-3"}>
         <div className={"col-span-2 row-span-2 "}>
             <div className={"card bg-base-100 shadow"}>
@@ -91,22 +104,18 @@ export const Home = (props) => {
             </div>
         </div>
         <Card title={"teste1"}>
-            <div className={"w-full"}>
-                {/*<ResponsiveWrapper>*/}
-                {/*    {({ width, height }) => <DeathLinePlot data={filteredData} width={width} height={height}/>}*/}
-                {/*</ResponsiveWrapper>*/}
-                <DeathLinePlot data={filteredData} width={800} height={400}/>
-            </div>
+            <DeathLinePlot data={filteredData} width={800} height={400}/>
         </Card>
         <Card title={"teste2"}>
-            {/*PLOT HERE*/}
+            <ResponsiveWrapper>
+                {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height}/>}
+            </ResponsiveWrapper>
         </Card>
         <Card title={"Data Table"}>
             <Table data={filteredData}/>
         </Card>
         <Card title={"teste4"}>
-            {/*PLOT HERE*/}
+            <SimpleLinePlot data={mockData}/>
         </Card>
-
     </div>
 };
