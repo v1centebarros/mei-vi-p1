@@ -3,6 +3,7 @@ import {Card} from "../../components/home/card/index.js";
 import {Table} from "../../components/plot/table/index.js";
 import {useData} from "../../contexts/data.jsx";
 import {DeathLinePlot} from "../../components/plot/deathLinePlot/index.js";
+import {ResponsiveWrapper} from "../../components/responsiveWrapper/index.js";
 
 export const Home = (props) => {
 
@@ -39,7 +40,6 @@ export const Home = (props) => {
     useEffect(() => {
         setFilteredData(() => data)
     }, [data])
-
 
     return <div className={"grid grid-cols-10 gap-3 p-3"}>
         <div className={"col-span-2 row-span-2 "}>
@@ -91,22 +91,14 @@ export const Home = (props) => {
             </div>
         </div>
         <Card title={"teste1"}>
-            <div className={"w-full"}>
-                {/*<ResponsiveWrapper>*/}
-                {/*    {({ width, height }) => <DeathLinePlot data={filteredData} width={width} height={height}/>}*/}
-                {/*</ResponsiveWrapper>*/}
-                <DeathLinePlot data={filteredData} width={800} height={400}/>
-            </div>
+            <ResponsiveWrapper>
+                {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height}/>}
+            </ResponsiveWrapper>
         </Card>
-        <Card title={"teste2"}>
-            {/*PLOT HERE*/}
-        </Card>
+        <Card title={"teste2"}></Card>
         <Card title={"Data Table"}>
             <Table data={filteredData}/>
         </Card>
-        <Card title={"teste4"}>
-            {/*PLOT HERE*/}
-        </Card>
-
+        <Card title={"teste4"}></Card>
     </div>
 };

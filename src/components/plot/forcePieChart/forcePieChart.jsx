@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-export const ForcePieChart = ({ data, selectedYear }) => {
+export const ForcePieChart = ({ data, selectedYear, width,height }) => {
   const svgRef = useRef();
-  const width = 700; // Width of the SVG
-  const height = 300; // Height of the SVG
   const radius = Math.min(width, height) / 2; // Radius of the pie chart
   const legendRectSize = 20; // Defines the size of the legend color box
   const legendSpacing = 10; // Defines the spacing between legend items

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-export const Histogram = ({ data }) => {
+export const Histogram = ({ data, width,height }) => {
   const svgRef = useRef();
 
   useEffect(() => {
@@ -71,7 +71,5 @@ export const Histogram = ({ data }) => {
 
   }, [data]);
 
-  return (
-      <svg ref={svgRef} width={800} height={600} />
-  );
+  return <svg ref={svgRef} width={width} height={height} />
 };
