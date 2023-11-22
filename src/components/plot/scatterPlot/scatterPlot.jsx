@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 export const ScatterPlot = ({ data }) => {
@@ -62,12 +62,7 @@ export const ScatterPlot = ({ data }) => {
             .attr("transform", `translate(-40,${height / 2}) rotate(-90)`)
             .style("text-anchor", "middle")
             .text("Age at Death");
-
-
-
     }, [data]);
 
-    return (
-        <svg ref={svgRef} width={900} height={600}></svg>
-    );
+    return <svg ref={svgRef} width={900} height={600}></svg>;
 };

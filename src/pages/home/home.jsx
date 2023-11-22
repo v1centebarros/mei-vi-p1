@@ -4,7 +4,6 @@ import {Table} from "../../components/plot/table/index.js";
 import {useData} from "../../contexts/data.jsx";
 import {DeathLinePlot} from "../../components/plot/deathLinePlot/index.js";
 import {ResponsiveWrapper} from "../../components/responsiveWrapper/index.js";
-import {SimpleLinePlot} from "../../components/plot/simpleLinePlot/index.js";
 
 export const Home = (props) => {
 
@@ -34,26 +33,10 @@ export const Home = (props) => {
     const filterData = () => data && setFilteredData(() => data.filter((row) => filterByCitizenship(row) && filterByGender(row), []))
 
 
-    useEffect(() => {
-        filterData()
-    }, [citizenship, gender])
+    useEffect(() => filterData(), [citizenship, gender])
 
-    useEffect(() => {
-        setFilteredData(() => data)
-    }, [data])
+    useEffect(() => setFilteredData(() => data), [data])
 
-    const mockData = [
-        {x: 1, y: 90},
-        {x: 2, y: 12},
-        {x: 3, y: 34},
-        {x: 4, y: 53},
-        {x: 5, y: 52},
-        {x: 6, y: 9},
-        {x: 7, y: 18},
-        {x: 8, y: 78},
-        {x: 9, y: 28},
-        {x: 10, y: 34},
-    ]
     return <div className={"grid grid-cols-10 gap-3 p-3"}>
         <div className={"col-span-2 row-span-2 "}>
             <div className={"card bg-base-100 shadow"}>
@@ -104,18 +87,14 @@ export const Home = (props) => {
             </div>
         </div>
         <Card title={"teste1"}>
-            <DeathLinePlot data={filteredData} width={800} height={400}/>
-        </Card>
-        <Card title={"teste2"}>
             <ResponsiveWrapper>
                 {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height}/>}
             </ResponsiveWrapper>
         </Card>
+        <Card title={"teste2"}></Card>
         <Card title={"Data Table"}>
             <Table data={filteredData}/>
         </Card>
-        <Card title={"teste4"}>
-            <SimpleLinePlot data={mockData}/>
-        </Card>
+        <Card title={"teste4"}></Card>
     </div>
 };
