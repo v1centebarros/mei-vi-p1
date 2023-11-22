@@ -1,42 +1,40 @@
 import {useData} from "../../contexts/data.jsx";
-import {useEffect} from "react";
 import {ScatterPlot} from "../../components/plot/scatterPlot/index.js";
 import {Histogram} from "../../components/plot/histogram/index.js";
 import {ForcePieChart} from "../../components/plot/forcePieChart/index.js";
 import {GunfirePieChart} from "../../components/plot/gunfirePieChart/index.js";
+import {ResponsiveWrapper} from "../../components/responsiveWrapper/index.js";
+import {Card} from "../../components/home/card/index.js";
 
 export const Stats = (props) => {
     const {data} = useData();
 
-    return <div className={"grid grid-cols-2 m-2 gap-2"}>
-        <div className={"card bg-base-100"}>
-            <div className={"card-body"}>
-                <div className={"card-title"}>Scatter Plot</div>
-                <ScatterPlot data={data} />
-            </div>
-        </div>
+    return <div className={"grid grid-cols-8 m-2 gap-2"}>
+        <Card title={"Scatter Plot"}>
+            <ResponsiveWrapper>
+                {({width, height}) => <ScatterPlot data={data} width={width} height={height}/>}
+            </ResponsiveWrapper>
+        </Card>
 
-        <div className={"card bg-base-100 gap-4"}>
-            <div className={"card-body"}>
-                <div className={"card-title"}>Scatter Plot</div>
-                <Histogram data={data} />
-            </div>
-        </div>
+        <Card title={"Histogram"}>
+            <ResponsiveWrapper>
+                {({width, height}) => <Histogram data={data} width={width} height={height}/>}
+            </ResponsiveWrapper>
+        </Card>
 
 
-        <div className={"card bg-base-100 gap-4"}>
-            <div className={"card-body"}>
-                <div className={"card-title"}>Scatter Plot</div>
-                <ForcePieChart data={data} selectedYear={2013}/>
-            </div>
-        </div>
+        <Card title={"Force Pie Chart"}>
+            <ResponsiveWrapper>
+                {({width, height}) => <ForcePieChart data={data} width={width} height={height}
+                                                     selectedYear={2013}/>}
+            </ResponsiveWrapper>
+        </Card>
 
-        <div className={"card bg-base-100 gap-4"}>
-            <div className={"card-body"}>
-                <div className={"card-title"}>Scatter Plot</div>
-                <GunfirePieChart data={data} selectedYear={2013}/>
-            </div>
-        </div>
+        <Card title={"Gunfire Pie Chart"}>
+            <ResponsiveWrapper>
+                {({width, height}) => <GunfirePieChart data={data} width={width} height={height} selectedYear={2013}/>}
+            </ResponsiveWrapper>
+        </Card>
 
 
     </div>
