@@ -1,75 +1,75 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { boundsCalculator } from '../../../utils/utils';
 
-export const Histogram = ({ data, width,height }) => {
-  const svgRef = useRef();
+export const Histogram = ({ data, width, height, margin }) => {
+    const svgRef = useRef();
 
-  useEffect(() => {
-    if (!data) return;
+    useEffect(() => {
+        if (!data) return;
 
-    // Set the dimensions and margins of the graph
-    const margin = { top: 10, right: 30, bottom: 30, left: 40 },
-        width = 800 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        // Set the dimensions and margins of the graph
 
-    // Select the SVG element and clear it
-    const svg = d3.select(svgRef.current);
-    svg.selectAll('*').remove();
+        const { boundsWidth, boundsHeight } = boundsCalculator(width, height, margin);
 
-    // Append group element and transform it
-    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+        // Select the SVG element and clear it
+        const svg = d3.select(svgRef.current);
+        svg.selectAll('*').remove();
 
-    // X axis: scale and draw
-    const x = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.age)])
-        .range([0, width]);
-    g.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
+        // Append group element and transform it
+        const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Set the parameters for the histogram
-    const histogram = d3.histogram()
-        .value(d => d.age)
-        .domain(x.domain())
-        .thresholds(x.ticks(40));  // Number of bins
+        // X axis: scale and draw
+        const x = d3.scaleLinear()
+            .domain([0, d3.max(data, d => d.age)])
+            .range([0, boundsWidth]);
+        g.append("g")
+            .attr("transform", `translate(0,${boundsHeight})`)
+            .call(d3.axisBottom(x));
 
-    // Group the data for the bars by gender
-    const binsMale = histogram(data.filter(d => d.gender === 'M'));
-    const binsFemale = histogram(data.filter(d => d.gender === 'F'));
+        // Set the parameters for the histogram
+        const histogram = d3.histogram()
+            .value(d => d.age)
+            .domain(x.domain())
+            .thresholds(x.ticks(40));  // Number of bins
 
-    // Y axis: scale and draw
-    const y = d3.scaleLinear()
-        .domain([0, d3.max([...binsMale, ...binsFemale], d => d.length)])
-        .range([height, 0]);
-    g.append("g").call(d3.axisLeft(y));
+        // Group the data for the bars by gender
+        const binsMale = histogram(data.filter(d => d.gender === 'M'));
+        const binsFemale = histogram(data.filter(d => d.gender === 'F'));
 
-    // Color palette
-    const colors = { 'M': "#1f77b4", 'F': "#e377c2" };
+        // Y axis: scale and draw
+        const y = d3.scaleLinear()
+            .domain([0, d3.max([...binsMale, ...binsFemale], d => d.length)])
+            .range([boundsHeight, 0]);
+        g.append("g").call(d3.axisLeft(y));
 
-    // Show the bars
-    g.selectAll(".bar.male")
-        .data(binsMale)
-        .enter()
-        .append("rect")
-        .attr("class", "bar male")
-        .attr("x", d => x(d.x0) + 1)
-        .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
-        .attr("y", d => y(d.length))
-        .attr("height", d => height - y(d.length))
-        .attr("fill", colors['M']);
+        // Color palette
+        const colors = { 'M': "#1f77b4", 'F': "#e377c2" };
 
-    g.selectAll(".bar.female")
-        .data(binsFemale)
-        .enter()
-        .append("rect")
-        .attr("class", "bar female")
-        .attr("x", d => x(d.x0) + 1)
-        .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
-        .attr("y", d => y(d.length))
-        .attr("height", d => height - y(d.length))
-        .attr("fill", colors['F']);
+        // Show the bars
+        g.selectAll(".bar.male")
+            .data(binsMale)
+            .enter()
+            .append("rect")
+            .attr("class", "bar male")
+            .attr("x", d => x(d.x0) + 1)
+            .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+            .attr("y", d => y(d.length))
+            .attr("boundsHeight", d => boundsHeight - y(d.length))
+            .attr("fill", colors['M']);
 
-  }, [data]);
+        g.selectAll(".bar.female")
+            .data(binsFemale)
+            .enter()
+            .append("rect")
+            .attr("class", "bar female")
+            .attr("x", d => x(d.x0) + 1)
+            .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+            .attr("y", d => y(d.length))
+            .attr("boundsHeight", d => boundsHeight - y(d.length))
+            .attr("fill", colors['F']);
 
-  return <svg ref={svgRef} width={width} height={height} />
+    }, [data,width,height]);
+
+    return <svg ref={svgRef} width={width} height={height} />
 };

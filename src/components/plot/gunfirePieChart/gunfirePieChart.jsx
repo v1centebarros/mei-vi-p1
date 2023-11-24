@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-export const GunfirePieChart = ({ data, selectedYear, width,height }) => {
+export const GunfirePieChart = ({ data, selectedYear, width,height,margin }) => {
   const svgRef = useRef();
   const radius = Math.min(width, height) / 2; // Radius of the pie chart
   const legendRectSize = 15; // Defines the size of the legend color box
@@ -89,7 +89,7 @@ export const GunfirePieChart = ({ data, selectedYear, width,height }) => {
         .attr('x', legendRectSize + legendSpacing)
         .attr('y', legendRectSize - legendSpacing)
         .text(d => gunfireData[d].gunfireType);
-  }, [data, selectedYear]);
+  }, [data, selectedYear, width, height]);
 
   return (
       <svg ref={svgRef} width={width} height={height}>

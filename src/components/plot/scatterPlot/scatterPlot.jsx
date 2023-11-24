@@ -1,16 +1,15 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { boundsCalculator } from '../../../utils/utils';
 
-export const ScatterPlot = ({ data, width, height }) => {
+export const ScatterPlot = ({ data, width, height, margin}) => {
     const svgRef = useRef();
 
     useEffect(() => {
         if (!data) return;
 
         // Set the dimensions and margins of the graph
-        const margin = { top: 30, right: 30, bottom: 10, left: 60 },
-            width = 800 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
+        const { boundsWidth, boundsHeight } = boundsCalculator(width, height, margin);
 
         // Select the SVG element and clear it
         const svg = d3.select(svgRef.current);
@@ -26,18 +25,18 @@ export const ScatterPlot = ({ data, width, height }) => {
         });
 
         // Add X axis and legend to label for date of death
-        
+
         const x = d3.scaleTime()
             .domain(d3.extent(data, d => d.date_of_death))
-            .range([0, width]);
+            .range([0, boundsWidth]);
         g.append("g")
-            .attr("transform", `translate(0,${height})`)
+            .attr("transform", `translate(0,${boundsHeight})`)
             .call(d3.axisBottom(x));
 
         // Add Y axis
         const y = d3.scaleLinear()
             .domain([0, d3.max(data, d => d.age)])
-            .range([height, 0]);
+            .range([boundsHeight, 0]);
         g.append("g").call(d3.axisLeft(y));
 
         // Add dots
@@ -52,17 +51,17 @@ export const ScatterPlot = ({ data, width, height }) => {
 
         // Add labels
         g.append("text")
-            .attr("transform", `translate(${width / 2},${height + margin.top + 40})`)
+            // .attr("transform", `translate(${width / 2},${height + margin.top + 40})`)
             .style("text-anchor", "middle")
             .text("Date of Death");
 
-        
+
         // Add labels
         g.append("text")
             .attr("transform", `translate(-40,${height / 2}) rotate(-90)`)
             .style("text-anchor", "middle")
             .text("Age at Death");
-    }, [data]);
+    }, [data, width, height]);
 
     return <svg ref={svgRef} width={width} height={height}></svg>;
 };
