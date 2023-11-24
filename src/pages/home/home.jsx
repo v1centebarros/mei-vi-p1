@@ -4,6 +4,7 @@ import {Table} from "../../components/plot/table/index.js";
 import {useData} from "../../contexts/data.jsx";
 import {DeathLinePlot} from "../../components/plot/deathLinePlot/index.js";
 import {ResponsiveWrapper} from "../../components/responsiveWrapper/index.js";
+import {MARGIN} from "../../utils/utils.js";
 
 export const Home = (props) => {
 
@@ -92,7 +93,7 @@ export const Home = (props) => {
         </div>
         <Card title={"teste1"}>
             <ResponsiveWrapper>
-                {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height}/>}
+                {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height} margin={MARGIN}/>}
             </ResponsiveWrapper>
         </Card>
         <Card title={"teste2"}></Card>

@@ -28,7 +28,7 @@ export const Histogram = ({ data, width, height, margin }) => {
             .call(d3.axisBottom(x));
 
         // Set the parameters for the histogram
-        const histogram = d3.histogram()
+        const histogram = d3.bin()
             .value(d => d.age)
             .domain(x.domain())
             .thresholds(x.ticks(40));  // Number of bins
@@ -47,6 +47,7 @@ export const Histogram = ({ data, width, height, margin }) => {
         const colors = { 'M': "#1f77b4", 'F': "#e377c2" };
 
         // Show the bars
+        // Show the bars
         g.selectAll(".bar.male")
             .data(binsMale)
             .enter()
@@ -55,7 +56,7 @@ export const Histogram = ({ data, width, height, margin }) => {
             .attr("x", d => x(d.x0) + 1)
             .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
             .attr("y", d => y(d.length))
-            .attr("boundsHeight", d => boundsHeight - y(d.length))
+            .attr("height", d => boundsHeight - y(d.length))  // Corrected this line
             .attr("fill", colors['M']);
 
         g.selectAll(".bar.female")
@@ -66,10 +67,11 @@ export const Histogram = ({ data, width, height, margin }) => {
             .attr("x", d => x(d.x0) + 1)
             .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
             .attr("y", d => y(d.length))
-            .attr("boundsHeight", d => boundsHeight - y(d.length))
+            .attr("height", d => boundsHeight - y(d.length))  // Corrected this line
             .attr("fill", colors['F']);
 
-    }, [data,width,height]);
+
+    }, [data, width, height]);
 
     return <svg ref={svgRef} width={width} height={height} />
 };

@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { boundsCalculator } from '../../../utils/utils';
 import * as d3 from 'd3';
 
-export const DeathLinePlot = ({ data, width, height }) => {
+export const DeathLinePlot = ({ data, width, height,margin }) => {
     const svgRef = useRef();
 
-    const { boundsWidth, boundsHeight, margin } = boundsCalculator(width, height);
 
     useEffect(() => {
         if (!data) return;
+        const { boundsWidth, boundsHeight } = boundsCalculator(width, height, margin);
 
         // Set the dimensions and margins of the graph
         // Select the SVG element and clear it
@@ -56,6 +56,6 @@ export const DeathLinePlot = ({ data, width, height }) => {
     }, [data, width, height]); // Dependency array includes width and height
 
     return (
-        <svg ref={svgRef} width={boundsWidth} height={boundsHeight}></svg>
+        <svg ref={svgRef} width={width} height={height}></svg>
     );
 };
