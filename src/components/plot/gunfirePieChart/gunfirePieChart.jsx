@@ -38,7 +38,7 @@ export const GunfirePieChart = ({ data, selectedYear, width,height,margin }) => 
 
     // Translate the group to center the pie chart within the SVG
     const g = svg.append('g')
-        .attr('transform', `translate(${width / 2}, ${height / 2})`);
+        .attr('transform', `translate(${radius}, ${height / 2})`);
 
     // Draw the pie chart
     g.selectAll('path')
@@ -47,35 +47,19 @@ export const GunfirePieChart = ({ data, selectedYear, width,height,margin }) => 
         .attr('d', arcGenerator)
         .attr('fill', (d, i) => color(i));
 
-    // Draw labels
-    g.selectAll('text')
-        .data(gunfirePieData)
-        .join('text')
-        .attr('transform', d => `translate(${labelArc.centroid(d)})`)
-        .attr('dy', '0.35em')
-        .text(d => d.data.gunfireType);
-
-    // Draw legend title
-    svg.append('text')
-        .attr('x', 2 * radius + 200)
-        .attr('y', 0)
-        .attr('dy', '0.35em')
-        .text('Gunfire Type');
-
-    
     // Legend group, which is translated to the right side of the pie chart
-    const legend = svg.selectAll('.legend')
-        .data(color.domain())
-        .enter()
-        .append('g')
-        .attr('class', 'legend')
-        .attr('transform', function(d, i) {
-          const height = legendRectSize + legendSpacing;
-          const offset = height * color.domain().length / 2;
-          const horz = 2 * radius + 200; // Move to the right side of the pie
-          const vert = i * height;
-          return `translate(${horz}, ${vert + (height / 2)})`;
-        });
+      const legend = svg.selectAll('.legend')
+          .data(color.domain())
+          .enter()
+          .append('g')
+          .attr('class', 'legend')
+          .attr('transform', function(d, i) {
+              const height = legendRectSize + legendSpacing;
+              const offset = height * color.domain().length / 2;
+              const horz = 2 * radius + 40; // Move to the right side of the pie
+              const vert = i * height;
+              return `translate(${horz}, ${vert + (height / 2)})`;
+          });
 
     // Draw legend colored rectangles
     legend.append('rect')
