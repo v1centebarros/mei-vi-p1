@@ -28,28 +28,29 @@ export const TreePlot = ({data, width, height, margin}) => {
 
         return hierarchy;
     }
-    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
     useEffect(() => {
+
         if (!data) return;
-
-        // Calculate bounds
-        const { boundsWidth, boundsHeight } = boundsCalculator(width, height, margin);
-
         // Select the SVG element and clear it
         const svg = d3.select(svgRef.current);
         svg.selectAll('*').remove();
 
         // Define the hierarchical structure
         const hierarchy = d3.hierarchy(createHierarchy(data))
-            .sum(d => d.value) // The size of each node will be proportional to its value
-            .sort((a, b) => b.height - a.height || b.value - a.value); // Sort by number of children and value
-
+            .sum(d => d.value)
+            .sort((a, b) => b.value - a.value);
         // Create a treemap layout
         const treeGenerator = d3.treemap()
-            .size([boundsWidth, boundsHeight])
+            .size([width, height])
             .padding(1)
             .tile(d3.treemapResquarify); // This tiling method attempts to create squarified rectangles
+
+        const firstLevelGroups = hierarchy.children.map(d => d.data.name);
+        // Create a color scale for each region
+        const colorScale = d3.scaleOrdinal()
+            .domain(firstLevelGroups)
+            .range(d3.schemeSet3);
 
         // Compute the treemap layout
         const root = treeGenerator(hierarchy);
