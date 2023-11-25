@@ -35,14 +35,14 @@ export const TreePlot = ({data, width, height, margin}) => {
         // Select the SVG element and clear it
         const svg = d3.select(svgRef.current);
         svg.selectAll('*').remove();
+        const {boundsWidth, boundsHeight} = boundsCalculator(width, height, margin);
 
         // Define the hierarchical structure
         const hierarchy = d3.hierarchy(createHierarchy(data))
             .sum(d => d.value)
-            .sort((a, b) => b.value - a.value);
         // Create a treemap layout
         const treeGenerator = d3.treemap()
-            .size([width, height])
+            .size([boundsWidth, boundsHeight])
             .padding(1)
             .tile(d3.treemapResquarify); // This tiling method attempts to create squarified rectangles
 
