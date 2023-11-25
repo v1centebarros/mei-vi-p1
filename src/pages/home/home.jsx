@@ -17,7 +17,7 @@ export const Home = (props) => {
     const [gender, setGender] = useState("all")
     const [killedBy, setKilledBy] = useState("all")
     const [injury, setInjury] = useState("all")
-
+    const [region, setRegion] = useState("West Bank")
 
     const {data} = useData()
     const [filteredData, setFilteredData] = useState(data)
@@ -122,8 +122,13 @@ export const Home = (props) => {
         </Card>
 
         <Card title={"teste4"}>
+            <select className="select select-bordered" onChange={(e) => setRegion(e.target.value)}>
+                <option value={"West Bank"}>West Bank</option>
+                <option value={"Gaza Strip"}>Gaza Strip</option>
+                <option value={"Israel"}>Israel</option>
+            </select>
             <ResponsiveWrapper>
-                {({width, height}) => <TreePlot data={filteredData} width={width} height={height} margin={MARGIN}/>}
+                {({width, height}) => <TreePlot data={filteredData} width={width} height={height} margin={MARGIN} regionName={region}/>}
             </ResponsiveWrapper>
         </Card>
     </div>

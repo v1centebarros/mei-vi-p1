@@ -1,28 +1,28 @@
-import {useEffect, useRef} from "react";
-import {boundsCalculator} from "../../../utils/utils.js";
+import { useEffect, useRef } from "react";
+import { boundsCalculator } from "../../../utils/utils.js";
 import * as d3 from "d3";
 
-export const TreePlot = ({data, width, height, margin}) => {
+export const TreePlot = ({ data, width, height, margin, regionName }) => {
     const svgRef = useRef();
 
-    function createHierarchy(data) {
+    function createHierarchy(data, regionName) {
+        let filteredData = data;
+        // If regionName is provided, filter the data to include only that region
+        if (regionName) {
+            filteredData = data.filter(d => d.event_location_region === regionName);
+        }
+
         // Grouping data by region and then by district
-        const groupedByRegion = d3.groups(data, d => d.event_location_region, d => d.event_location_district);
+        const groupedByRegion = d3.groups(filteredData, d => d.event_location_district);
 
         // Transforming the grouped data into the required hierarchical format
         const hierarchy = {
             type: 'node',
             name: 'root',
-            value: data.length,
-            children: groupedByRegion.map(([region, districts]) => ({
-                type: 'node',
-                name: region,
-                value: d3.sum(districts, district => district[1].length),
-                children: districts.map(([district, records]) => ({
-                    type: 'leaf',
-                    name: district,
-                    value: records.length
-                }))
+            children: groupedByRegion.map(([district, records]) => ({
+                type: 'leaf',
+                name: district,
+                value: records.length
             }))
         };
 
@@ -30,30 +30,33 @@ export const TreePlot = ({data, width, height, margin}) => {
     }
 
     useEffect(() => {
-
         if (!data) return;
+
+        // Calculate bounds
+        const { boundsWidth, boundsHeight } = boundsCalculator(width, height, margin);
+
         // Select the SVG element and clear it
         const svg = d3.select(svgRef.current);
         svg.selectAll('*').remove();
-        const {boundsWidth, boundsHeight} = boundsCalculator(width, height, margin);
 
         // Define the hierarchical structure
-        const hierarchy = d3.hierarchy(createHierarchy(data))
+        const hierarchy = d3.hierarchy(createHierarchy(data, regionName))
             .sum(d => d.value)
+            .sort((a, b) => b.value - a.value);
+
         // Create a treemap layout
         const treeGenerator = d3.treemap()
             .size([boundsWidth, boundsHeight])
             .padding(1)
-            .tile(d3.treemapResquarify); // This tiling method attempts to create squarified rectangles
-
-        const firstLevelGroups = hierarchy.children.map(d => d.data.name);
-        // Create a color scale for each region
-        const colorScale = d3.scaleOrdinal()
-            .domain(firstLevelGroups)
-            .range(d3.schemeSet3);
+            .tile(d3.treemapResquarify);
 
         // Compute the treemap layout
         const root = treeGenerator(hierarchy);
+
+        // Create a color scale for each district
+        const colorScale = d3.scaleOrdinal()
+            .domain(root.leaves().map(d => d.data.name))
+            .range(d3.schemeSet3);
 
         const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
@@ -96,8 +99,8 @@ export const TreePlot = ({data, width, height, margin}) => {
             .attr("alignment-baseline", "hanging")
             .style("display", d => (d.y1 - d.y0) > 20 ? "block" : "none"); // Hide text if the rectangle is too short
 
-    }, [data, width, height, margin]);
 
+    }, [data, width, height, margin, regionName]); // Add regionName as a dependency
 
     return <svg ref={svgRef} width={width} height={height}></svg>;
 };
