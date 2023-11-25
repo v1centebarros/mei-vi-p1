@@ -62,13 +62,35 @@ export const Histogram = ({data, width, height, margin}) => {
 
         // Add labels
         g.append("text")
-            .attr("transform", `translate(${width / 2},${height + margin.bottom})`)
+            .attr("transform", `translate(${width / 2},${height - margin.bottom / 2})`)
             .text("Age");
 
         // Add labels
         g.append("text")
-            .attr("transform", `translate(-40,${height / 2}) rotate(-90)`)
-            .text("Count");
+            .attr("transform", `translate(-40,${(height / 2) + margin.top}) rotate(-90)`)
+            .text("Number of Deaths");
+
+        // Add legend
+        const legend = g.append("g")
+            .attr("transform", `translate(${boundsWidth - 50},${margin.top + 20})`)
+            .attr("text-anchor", "end")
+            .style("font", "12px sans-serif")
+            .selectAll("g")
+            .data(Object.keys(colors))
+            .join("g")
+            .attr("transform", (d, i) => `translate(0,${i * 20})`);
+
+        legend.append("rect")
+            .attr("x", -19)
+            .attr("width", 19)
+            .attr("height", 19)
+            .attr("fill", d => colors[d]);
+
+        legend.append("text")
+            .attr("x", -24)
+            .attr("y", 9.5)
+            .attr("dy", "0.35em")
+            .text(d => d);
 
 
     }, [data, width, height]);
