@@ -7,6 +7,7 @@ import {ResponsiveWrapper} from "../../components/responsiveWrapper/index.js";
 import {MARGIN} from "../../utils/utils.js";
 import {ScatterPlot} from "../../components/plot/scatterPlot/index.js";
 import {Histogram} from "../../components/plot/histogram/index.js";
+import {SpiderPlot} from "../../components/plot/spiderPlot/index.js";
 
 export const Home = (props) => {
 
@@ -110,6 +111,13 @@ export const Home = (props) => {
         <Card title={"teste4"}>
             <ResponsiveWrapper>
                 {({width, height}) => <Histogram data={filteredData} width={width} height={height} margin={MARGIN}/>}
+            </ResponsiveWrapper>
+        </Card>
+
+
+        <Card title={"teste4"}>
+            <ResponsiveWrapper>
+                {({width, height}) => <SpiderPlot data={filteredData} width={width} height={height}/>}
             </ResponsiveWrapper>
         </Card>
     </div>
