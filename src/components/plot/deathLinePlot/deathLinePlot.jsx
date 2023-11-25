@@ -27,7 +27,6 @@ export const DeathLinePlot = ({ data, width, height,margin }) => {
             }
         });
 
-
         // Add X axis
         const x = d3.scaleTime()
             .domain(d3.extent(parsedData, d => d.date))
@@ -52,6 +51,17 @@ export const DeathLinePlot = ({ data, width, height,margin }) => {
                 .x(d => x(d.date))
                 .y(d => y(d.deaths))
             );
+
+        // Add labels
+        g.append("text")
+            .attr("transform", `translate(${width / 2},${height + margin.bottom})`)
+            .text("Date of Death");
+
+        // Add labels
+        g.append("text")
+            .attr("transform", `translate(-40,${height / 2}) rotate(-90)`)
+            .style("text-anchor", "middle")
+            .text("Deaths");
 
     }, [data, width, height]); // Dependency array includes width and height
 

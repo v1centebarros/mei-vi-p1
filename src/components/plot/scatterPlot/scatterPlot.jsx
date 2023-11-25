@@ -51,8 +51,7 @@ export const ScatterPlot = ({ data, width, height, margin}) => {
 
         // Add labels
         g.append("text")
-            // .attr("transform", `translate(${width / 2},${height + margin.top + 40})`)
-            .style("text-anchor", "middle")
+            .attr("transform", `translate(${width / 2},${height + margin.bottom})`)
             .text("Date of Death");
 
 
