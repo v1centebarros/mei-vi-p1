@@ -18,7 +18,6 @@ export const SpiderPlot = ({data, width, height}) => {
         const maxValue = d3.max(Object.values(parsedData));
 
 
-        console.log(parsedData)
         const axisConfig = [
             {name: 'West Bank', max: maxValue},
             {name: 'Gaza Strip', max: maxValue},

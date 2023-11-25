@@ -42,7 +42,6 @@ export const Home = (props) => {
     }, [citizenship, gender])
 
     useEffect(() => {
-        console.log("data changed")
         setFilteredData(() => data)
     }, [data])
 
