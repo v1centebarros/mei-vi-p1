@@ -12,7 +12,7 @@ export const Table = ({data}) => {
         {slug: "killed_by", name: "Killed By"},
     ]
 
-    return <div className="max-h-80 overflow-auto">
+    return <div className="max-h-96 overflow-auto">
         <table className="table table-md table-pin-rows table-pin-cols">
             <thead>
             <tr>
