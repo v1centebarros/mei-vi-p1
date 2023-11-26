@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Fatalities over Time",
+    "description": "This plot displays the number of fatalities in the Israel-Palestine conflict over a specified time period. The vertical axis represents the number of fatalities, while the horizontal axis represents the date of the events. Spikes in the graph likely indicate specific incidents or escalations in the conflict that resulted in a higher number of deaths. Users can analyze patterns over time, observe periods of increased conflict intensity, and identify any trends or anomalies in the data."
+  },
+  {
+    "title": "Age Distribution of Fatalities",
+    "description": "This scatter plot illustrates the age distribution of individuals who died in the Israel-Palestine conflict, plotted over time. Each dot represents a fatality, with the vertical axis showing the age at death and the horizontal axis indicating the date of the event. Clustering of dots at specific ages may indicate demographics that are more affected during certain times. This visualization helps understand the impact of the conflict on different age groups over the specified period."
+  },
+  {
+    "title": "Fatalities Record",
+    "description": "This table presents a record of individual fatalities in the Israel-Palestine conflict. It includes detailed information such as the name of the deceased, date of death, age, gender, citizenship, location of the incident, and the party responsible for the fatality. The table is meant to provide a humanizing element to the data by acknowledging each person as an individual, which can often be lost in large datasets. This record can be essential for human rights documentation, journalistic reporting, and historical archiving."
+  },
+  {
+    "title": "Age and Gender Distribution of Fatalities",
+    "description": "This bar chart shows the number of fatalities in the Israel-Palestine conflict by age and gender. The horizontal axis represents age, and the vertical axis shows the number of deaths. Different colors in the bars represent gender, allowing for a visual comparison between male and female fatalities across different age groups. This graph can help in understanding how the conflict impacts different demographics and may be useful in policy formation and humanitarian efforts."
+  },
+  {
+    "title": "Distribution of Fatalities by City",
+    "description": "The treemap represents the distribution of fatalities by city within a selected region, such as the West Bank. Each block's size is proportional to the number of fatalities in that city, with colors assigned randomly for visual differentiation. This visualization helps to identify the areas with the highest incidences of fatalities and can guide in resource allocation and further analysis of the conflict's urban impact."
+  },
+  {
+    "title": "Distribution of Fatalities by Region",
+    "description": "This radar chart compares the number of fatalities in different regions, such as the West Bank and the Gaza Strip. Each axis represents a region, and the plotted shape shows the relative number of fatalities in each area. A larger area covered by the shape indicates a higher number of fatalities. This chart can provide insights into the geographical spread of the conflict's impact."
+  },
+  {
+    "title": "Types of Weaponry Used in the Conflict",
+    "description": "This horizontal bar chart illustrates the types of weaponry used in the conflict and the associated number of fatalities. The horizontal axis shows the number of fatalities, and the vertical axis lists the types of weapons. The length of the bar represents the fatality count attributed to each weapon type, highlighting the lethality and prevalence of different weapons in the conflict."
+  },
+  {
+    "title": "Fatalities Distribution by the Military Forces",
+    "description": "This pie chart presents the distribution of fatalities by different military forces involved in the conflict. The chart segments represent groups such as Israeli security forces, Palestinian civilians, and Israeli civilians. The size of each segment shows the proportion of total fatalities attributed to each group, which can be critical for understanding the dynamics of the conflict and its human cost."
+  }
+]

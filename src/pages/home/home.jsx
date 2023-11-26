@@ -12,6 +12,7 @@ import {TreePlot} from "../../components/plot/treePlot/index.js";
 import {ForcePieChart} from "../../components/plot/forcePieChart/index.js";
 import {GunfireBarChart} from "../../components/plot/gunfireBarChart/index.js";
 import {Modal} from "../../components/modal/index.js";
+import information from "./information.json"
 
 export const Home = (props) => {
 
@@ -72,7 +73,8 @@ export const Home = (props) => {
         setFilteredData(() => data)
     }, [data])
 
-    return <div className={"grid grid-cols-10 h-full gap-x-4 lg:overflow-y-hidden gap-y-2 lg:gap-y-0 mx-2"} id={"container"}>
+    return <div className={"grid grid-cols-10 h-full gap-x-4 lg:overflow-y-hidden gap-y-2 lg:gap-y-0 mx-2"}
+                id={"container"}>
         <div className={"col-span-full lg:col-span-2"}>
             <div className={"card bg-base-100"}>
                 <div className={"card-body"}>
@@ -156,29 +158,31 @@ export const Home = (props) => {
             </div>
         </div>
         <div className={"col-span-full lg:col-span-8 grid grid-cols-4 lg:overflow-y-auto gap-2 pb-3"}>
-            <Card title={"Fatalities over Time"}>
+            <Card title={"Fatalities over Time"} info={information[0]} setModal={setModal}>
                 <ResponsiveWrapper>
                     {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height}
                                                          margin={DEFAULT_MARGIN}/>}
                 </ResponsiveWrapper>
             </Card>
-            <Card title={"Age Distribution of Fatalities"}>
+            <Card title={"Age Distribution of Fatalities"} info={information[1]} setModal={setModal}>
                 <ResponsiveWrapper>
                     {({width, height}) => <ScatterPlot data={filteredData} width={width} height={height}
                                                        margin={DEFAULT_MARGIN}/>}
                 </ResponsiveWrapper>
             </Card>
-            <Card title={"Fatalities Record"}>
+            <Card title={"Fatalities Record"} info={information[2]} setModal={setModal}>
                 <Table data={filteredData}/>
             </Card>
-            <Card title={"Age and Gender Distribution of Fatalities"}>
+
+
+            <Card title={"Age and Gender Distribution of Fatalities"} info={information[3]} setModal={setModal}>
                 <ResponsiveWrapper>
                     {({width, height}) => <Histogram data={filteredData} width={width} height={height}
                                                      margin={DEFAULT_MARGIN}/>}
                 </ResponsiveWrapper>
             </Card>
 
-            <Card title={"Distribution of Fatalities by City"}>
+            <Card title={"Distribution of Fatalities by City"} info={information[4]} setModal={setModal}>
                 <select className="select select-bordered max-w-xs" onChange={(e) => setRegion(e.target.value)}>
                     <option value={"West Bank"}>West Bank</option>
                     <option value={"Gaza Strip"}>Gaza Strip</option>
@@ -190,36 +194,27 @@ export const Home = (props) => {
                 </ResponsiveWrapper>
             </Card>
 
-            <Card title={"Distribution of Fatalities by Region"}>
+            <Card title={"Distribution of Fatalities by Region"} info={information[5]} setModal={setModal}>
                 <ResponsiveWrapper>
                     {({width, height}) => <SpiderPlot data={filteredData} width={width} height={height}/>}
                 </ResponsiveWrapper>
             </Card>
 
 
-
-            <Card title={"Types of Weaponry Used in the Conflict"}>
+            <Card title={"Types of Weaponry Used in the Conflict"} info={information[6]} setModal={setModal}>
                 <ResponsiveWrapper>
                     {({width, height}) => <GunfireBarChart data={filteredData} width={width} height={height}
                                                            margin={BAR_PLOT_MARGIN}/>}
                 </ResponsiveWrapper>
             </Card>
 
-            <Card title={"Fatalities distribution by the Military Forces"}>
+            <Card title={"Fatalities distribution by the Military Forces"} info={information[7]} setModal={setModal}>
                 <ResponsiveWrapper>
                     {({width, height}) => <ForcePieChart data={filteredData} width={width} height={height}
                                                          margin={DEFAULT_MARGIN}/>}
                 </ResponsiveWrapper>
             </Card>
-
-            {/*<Card title={"Types of Weaponry Used in the Conflict"}>*/}
-            {/*    <ResponsiveWrapper>*/}
-            {/*        {({ width, height }) => <GunfirePieChart data={filteredData} width={width} height={height} margin={NON_LINE_MARGIN}/>}*/}
-            {/*    </ResponsiveWrapper>*/}
-            {/*</Card>*/}
-
-
-            <Modal title={"teste"} content={"teste"}/>
+            <Modal title={modal.title} content={modal.content}/>
         </div>
     </div>
 };

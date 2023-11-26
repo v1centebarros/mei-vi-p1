@@ -1,9 +1,15 @@
-export const Card = ({title, children}) => {
+export const Card = ({title,info,setModal, children}) => {
     return <div className={"col-span-full lg:col-span-2 card bg-base-100"}>
         <div className={"card-body"}>
             <div className={"card-title justify-between"}>
                 <div>{title}</div>
-                <button onClick={() => document.getElementById('my_modal_2').showModal()}>
+                <button onClick={() => {
+                    setModal(()=>({
+                        title: info.title,
+                        content: info.description
+                    }))
+                    document.getElementById('my_modal_2').showModal()
+                }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                          className="bi bi-info-circle-fill" viewBox="0 0 16 16">
                         <path
