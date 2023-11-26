@@ -85,6 +85,10 @@ export const GunfireBarChart = ({ data, width, height, margin }) => {
         .attr('alignment-baseline', 'middle')
         .text(d => d.count);
 
+    svg.append('g').append("text")
+        .attr("transform", `translate(${width / 2 - 20},${(height - margin.bottom + 40)})`)
+        .text("Number of Fatalities");
+
   }, [data, width, height, margin]);
 
   return (
