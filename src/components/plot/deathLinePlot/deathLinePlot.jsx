@@ -20,6 +20,7 @@ export const DeathLinePlot = ({data, width, height, margin}) => {
 
         // Format the data
         const parseDate = d3.timeParse("%Y-%m-%d");
+        const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
         // Aggregate the number of deaths by month
         const parsedData = d3.groups(data, d => d3.timeMonth(parseDate(d.date_of_event)))
@@ -43,6 +44,30 @@ export const DeathLinePlot = ({data, width, height, margin}) => {
             .attr("stroke", "steelblue")
             .attr("stroke-width", 1.5)
             .attr("d", d3.line().x(d => x(d.date)).y(d => y(d.deaths)));
+
+// Add dots for each data point
+        g.selectAll(".dot")
+            .data(parsedData)
+            .enter().append("circle")
+            .attr("class", "dot")
+            .attr("cx", d => x(d.date))
+            .attr("cy", d => y(d.deaths))
+            .attr("r", 2) // Radius of the dots; adjust as needed
+            .attr("fill", "steelblue").on("mouseover", function () {
+            return tooltip.style("visibility", "visible");
+        })
+            .on("mousemove", function (event, d) {
+
+                return tooltip
+                    .style("position", "absolute")
+                    .style("top", (event.pageY - 10) + "px")
+                    .style("left", (event.pageX + 10) + "px")
+                    .html(`<div class="card bg-base-100 shadow"><div class="text-sm">${d.date}</div><div class="text-sm">Number of Fatalities: ${d.deaths}</div>`);
+            })
+            // Make div disappear
+            .on("mouseout", function () {
+                return tooltip.style("visibility", "hidden");
+            });
         // Add labels
         g.append("text")
             .attr("transform", `translate(${width / 3},${(height - margin.bottom / 3)})`)
