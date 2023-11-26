@@ -9,8 +9,6 @@ export const Navbar = (props) => {
       <ul className="menu menu-horizontal px-1">
         <li><Link to={"/"}>Home</Link></li>
         <li><Link to={"/stats"}>Stats</Link></li>
-        <li><a>Page 3</a></li>
-        <li><a>Page 4</a></li>
       </ul>
     </div>
   </div>

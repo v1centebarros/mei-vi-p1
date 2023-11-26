@@ -4,13 +4,14 @@ import {Table} from "../../components/plot/table/index.js";
 import {useData} from "../../contexts/data.jsx";
 import {DeathLinePlot} from "../../components/plot/deathLinePlot/index.js";
 import {ResponsiveWrapper} from "../../components/responsiveWrapper/index.js";
-import {MARGIN} from "../../utils/utils.js";
+import {BAR_PLOT_MARGIN, DEFAULT_MARGIN, NON_LINE_MARGIN} from "../../utils/utils.js";
 import {ScatterPlot} from "../../components/plot/scatterPlot/index.js";
 import {Histogram} from "../../components/plot/histogram/index.js";
 import {SpiderPlot} from "../../components/plot/spiderPlot/index.js";
 import {TreePlot} from "../../components/plot/treePlot/index.js";
 import {ForcePieChart} from "../../components/plot/forcePieChart/index.js";
 import {GunfirePieChart} from "../../components/plot/gunfirePieChart/index.js";
+import {GunfireBarChart} from "../../components/plot/gunfireBarChart/index.js";
 
 export const Home = (props) => {
 
@@ -148,12 +149,12 @@ export const Home = (props) => {
         </div>
         <Card title={"Fatalities over Time"}>
             <ResponsiveWrapper>
-                {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height} margin={MARGIN}/>}
+                {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height} margin={DEFAULT_MARGIN}/>}
             </ResponsiveWrapper>
         </Card>
         <Card title={"Age Distribution of Fatalities"}>
             <ResponsiveWrapper>
-                {({ width, height }) => <ScatterPlot data={filteredData} width={width} height={height} margin={MARGIN} />}
+                {({ width, height }) => <ScatterPlot data={filteredData} width={width} height={height} margin={DEFAULT_MARGIN} />}
             </ResponsiveWrapper>
         </Card>
         <Card title={"Data Table"}>
@@ -161,7 +162,7 @@ export const Home = (props) => {
         </Card>
         <Card title={"Age and Gender Distribution of Fatalities"}>
             <ResponsiveWrapper>
-                {({width, height}) => <Histogram data={filteredData} width={width} height={height} margin={MARGIN}/>}
+                {({width, height}) => <Histogram data={filteredData} width={width} height={height} margin={DEFAULT_MARGIN}/>}
             </ResponsiveWrapper>
         </Card>
 
@@ -179,19 +180,25 @@ export const Home = (props) => {
                 <option value={"Israel"}>Israel</option>
             </select>
             <ResponsiveWrapper>
-                {({width, height}) => <TreePlot data={filteredData} width={width} height={height} margin={MARGIN} regionName={region}/>}
+                {({width, height}) => <TreePlot data={filteredData} width={width} height={height} margin={NON_LINE_MARGIN} regionName={region}/>}
             </ResponsiveWrapper>
         </Card>
 
         <Card title={"Fatalities distribution by the Military Forces"}>
             <ResponsiveWrapper>
-                {({ width, height }) => <ForcePieChart data={filteredData} width={width} height={height} margin={MARGIN}/>}
+                {({ width, height }) => <ForcePieChart data={filteredData} width={width} height={height} margin={DEFAULT_MARGIN}/>}
             </ResponsiveWrapper>
         </Card>
 
+        {/*<Card title={"Types of Weaponry Used in the Conflict"}>*/}
+        {/*    <ResponsiveWrapper>*/}
+        {/*        {({ width, height }) => <GunfirePieChart data={filteredData} width={width} height={height} margin={NON_LINE_MARGIN}/>}*/}
+        {/*    </ResponsiveWrapper>*/}
+        {/*</Card>*/}
+
         <Card title={"Types of Weaponry Used in the Conflict"}>
             <ResponsiveWrapper>
-                {({ width, height }) => <GunfirePieChart data={filteredData} width={width} height={height} margin={MARGIN}/>}
+                {({ width, height }) => <GunfireBarChart data={filteredData} width={width} height={height} margin={BAR_PLOT_MARGIN}/>}
             </ResponsiveWrapper>
         </Card>
     </div>
