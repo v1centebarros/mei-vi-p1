@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Card} from "../../components/home/card/index.js";
 import {Table} from "../../components/plot/table/index.js";
 import {useData} from "../../contexts/data.jsx";
@@ -21,6 +21,12 @@ export const Home = (props) => {
     const [injury, setInjury] = useState("all")
     const [region, setRegion] = useState("West Bank")
 
+    const citizenshipRef = useRef(null);
+    const genderRef = useRef(null);
+    const killedByRef = useRef(null);
+    const injuryRef = useRef(null);
+
+
     const {data} = useData()
     const [filteredData, setFilteredData] = useState(data)
 
@@ -30,6 +36,10 @@ export const Home = (props) => {
         setKilledBy("all")
         setInjury("all")
         setFilteredData(data)
+        citizenshipRef.current.value = "all"
+        genderRef.current.value = "all"
+        killedByRef.current.value = "all"
+        injuryRef.current.value = "all"
     }
 
     const filterByCitizenship = (row) => citizenship === "all" || row.citizenship === citizenship
@@ -60,7 +70,7 @@ export const Home = (props) => {
                             <label className="label">
                                 <span className="label-text font-bold text-xl">Citizenship</span>
                             </label>
-                            <select className="select select-bordered" onChange={(e) => setCitizenship(e.target.value)}>
+                            <select className="select select-bordered" onChange={(e) => setCitizenship(e.target.value)} ref={citizenshipRef}>
                                 <option value={"all"}>All</option>
                                 <option value={"Israeli"}>Israeli</option>
                                 <option value={"Palestinian"}>Palestinian</option>
@@ -69,7 +79,7 @@ export const Home = (props) => {
                             <label className="label">
                                 <span className="label-text font-bold text-xl">Gender</span>
                             </label>
-                            <select className="select select-bordered" onChange={(e) => setGender(e.target.value)}>
+                            <select className="select select-bordered" onChange={(e) => setGender(e.target.value)} ref={genderRef}>
                                 <option value={"all"}>All</option>
                                 <option value={"M"}>Male</option>
                                 <option value={"F"}>Female</option>
@@ -79,7 +89,7 @@ export const Home = (props) => {
                             <label className="label">
                                 <span className="label-text font-bold text-xl">Killed By</span>
                             </label>
-                            <select className="select select-bordered" onChange={(e) => setKilledBy(e.target.value)}>
+                            <select className="select select-bordered" onChange={(e) => setKilledBy(e.target.value)} ref={killedByRef}>
                                 <option value={"all"}>All</option>
                                 <option value="Israeli security forces">Israeli security forces</option>
                                 <option value="Palestinian civilians">Palestinian civilians</option>
@@ -89,7 +99,7 @@ export const Home = (props) => {
                             <label className="label">
                                 <span className="label-text font-bold text-xl">Type of Injury</span>
                             </label>
-                            <select className="select select-bordered" onChange={(e) => setInjury(e.target.value)}>
+                            <select className="select select-bordered" onChange={(e) => setInjury(e.target.value)} ref={injuryRef}>
                                 <option value="all">All</option>
                                 <option value="gunfire">Gunfire</option>
                                 <option value="stabbing">Stabbing</option>
