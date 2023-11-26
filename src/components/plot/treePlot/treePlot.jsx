@@ -52,7 +52,7 @@ export const TreePlot = ({data, width, height, margin, regionName}) => {
         // Create a color scale for each district
         const colorScale = d3.scaleOrdinal()
             .domain(root.leaves().map(d => d.data.name))
-            .range(d3.schemeSet3);
+            .range(d3.schemeSet2);
 
         const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 

@@ -15,7 +15,7 @@ export const ForcePieChart = ({data, width, height, margin}) => {
             .map(([key, value]) => ({force: key, count: value}));
 
         // Color scale
-        const color = d3.scaleOrdinal(d3.schemeCategory10);
+        const color = d3.scaleOrdinal(d3.schemeSet2);
 
         // Pie function
         const pie = d3.pie().value(d => d.count)(forceData);
@@ -55,7 +55,6 @@ export const ForcePieChart = ({data, width, height, margin}) => {
             .on("mouseout", function () {
                 return tooltip.style("visibility", "hidden");
             });
-
 
         // Legend group, which is translated to the right side of the pie chart
         const legend = svg.selectAll('.legend')

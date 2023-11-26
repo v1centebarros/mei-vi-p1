@@ -139,7 +139,7 @@ export const Home = (props) => {
 
                         </div>
 
-                        <button className={"btn btn-primary btn-block"}
+                        <button className={"btn btn-secondary btn-block"}
                                 onClick={clearFilters}
                         >Clear Filters
                         </button>

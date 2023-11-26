@@ -26,11 +26,13 @@ export const GunfireBarChart = ({ data, width, height, margin }) => {
         .range([margin.left, width - margin.right]);
 
     // Color scale
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
+    const color = d3.scaleOrdinal(d3.schemeSet2);
 
     // Create the SVG context and clear any previous content
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove(); // Clear previous SVG contents
+
+    const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
     // Draw the bars
     svg.selectAll('.bar')
@@ -41,7 +43,24 @@ export const GunfireBarChart = ({ data, width, height, margin }) => {
         .attr('x', margin.left)
         .attr('width', d => xScale(d.count) - margin.left)
         .attr('height', yScale.bandwidth())
-        .attr('fill', (d, i) => color(i));
+        .attr('fill', (d, i) => color(i)).on("mouseover", function () {
+      return tooltip.style("visibility", "visible");
+    })
+        .on("mousemove", function (event, d) {
+
+          return tooltip
+              .style("position", "absolute")
+              .style("top", (event.pageY - 10) + "px")
+              .style("left", (event.pageX + 10) + "px")
+              .html(`<div class="card bg-base-100 shadow">
+<div class="card-body">
+<div class="card-title text-md">${d.gunfireType}</div><div class="text-sm">Number of Fatalities: ${d.count}</div></div>`);
+        })
+        // Make div disappear
+        .on("mouseout", function () {
+          return tooltip.style("visibility", "hidden");
+        });
+
 
     // Add the Y Axis
     svg.append('g')
