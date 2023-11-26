@@ -60,7 +60,7 @@ export const GunfireBarChart = ({ data, width, height, margin }) => {
         .data(gunfireData)
         .join('text')
         .attr('class', 'label')
-        .attr('y', d => yScale(d.gunfireType) + yScale.bandwidth() / 2)
+        .attr('y', d => yScale(d.gunfireType)+ 3 + yScale.bandwidth() / 2)
         .attr('x', d => xScale(d.count) + 3)
         .attr('text-anchor', 'start')
         .attr('alignment-baseline', 'middle')
