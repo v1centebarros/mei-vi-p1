@@ -7,8 +7,8 @@ export const Navbar = (props) => {
     </div>
     <div className="flex-none">
       <ul className="menu menu-horizontal px-1">
-        <li><Link to={"/home"}>Home</Link></li>
-        <li><Link to={"/"}>Stats</Link></li>
+        <li><Link to={"/"}>Home</Link></li>
+        <li><Link to={"/stats"}>Stats</Link></li>
         <li><a>Page 3</a></li>
         <li><a>Page 4</a></li>
       </ul>
