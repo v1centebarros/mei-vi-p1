@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
-import { boundsCalculator } from "../../../utils/utils.js";
+import {useEffect, useRef} from "react";
+import {boundsCalculator} from "../../../utils/utils.js";
 import * as d3 from "d3";
 
-export const TreePlot = ({ data, width, height, margin, regionName }) => {
+export const TreePlot = ({data, width, height, margin, regionName}) => {
     const svgRef = useRef();
 
     function createHierarchy(data, regionName) {
@@ -17,12 +17,8 @@ export const TreePlot = ({ data, width, height, margin, regionName }) => {
 
         // Transforming the grouped data into the required hierarchical format
         const hierarchy = {
-            type: 'node',
-            name: 'root',
-            children: groupedByRegion.map(([district, records]) => ({
-                type: 'leaf',
-                name: district,
-                value: records.length
+            type: 'node', name: 'root', children: groupedByRegion.map(([district, records]) => ({
+                type: 'leaf', name: district, value: records.length
             }))
         };
 
@@ -33,7 +29,7 @@ export const TreePlot = ({ data, width, height, margin, regionName }) => {
         if (!data) return;
 
         // Calculate bounds
-        const { boundsWidth, boundsHeight } = boundsCalculator(width, height, margin);
+        const {boundsWidth, boundsHeight} = boundsCalculator(width, height, margin);
 
         // Select the SVG element and clear it
         const svg = d3.select(svgRef.current);
@@ -60,6 +56,9 @@ export const TreePlot = ({ data, width, height, margin, regionName }) => {
 
         const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
+        const tooltip = d3.select("body").append("div").attr("class", "tooltip");
+
+
         // Drawing rectangles for each node
         g.selectAll("rect")
             .data(root.leaves())
@@ -69,7 +68,20 @@ export const TreePlot = ({ data, width, height, margin, regionName }) => {
             .attr("width", d => d.x1 - d.x0)
             .attr("height", d => d.y1 - d.y0)
             .style("fill", d => colorScale(d.data.name)) // Use a color scale function for colors
-            .attr("class", "opacity-80 hover:opacity-100");
+            .attr("class", "opacity-80 hover:opacity-100").on("mouseover", function () {
+            return tooltip.style("visibility", "visible");
+        })
+            .on("mousemove", function (event, d) {
+                return tooltip
+                    .style("position", "absolute")
+                    .style("top", (event.pageY - 10) + "px")
+                    .style("left", (event.pageX + 10) + "px")
+                    .html(`<div class="card bg-base-100 shadow"><div class="card-body"><div class="card-title">${d.data.name}</div><div class="text-sm">Number of Fatalities: ${d.data.value}</div></div>`);
+            })
+            // Make div disappear
+            .on("mouseout", function () {
+                return tooltip.style("visibility", "hidden");
+            });
 
         // Adding text labels only if they fit in the rectangle
         g.selectAll("text.name")
@@ -86,18 +98,18 @@ export const TreePlot = ({ data, width, height, margin, regionName }) => {
             .style("display", d => (d.x1 - d.x0) > d.data.name.length * 8 ? "block" : "none"); // Hide text if it doesn't fit
 
         // Adding values as text (optional)
-        g.selectAll("text.value")
-            .data(root.leaves())
-            .join("text")
-            .attr("class", "value")
-            .attr("x", d => d.x0 + 5)
-            .attr("y", d => d.y0 + 35)
-            .text(d => d.data.value)
-            .attr("font-size", d => Math.min(12, (d.x1 - d.x0) / 3)) // Adjust font size based on rectangle width
-            .attr("fill", "black") // Changed for better legibility
-            .attr("text-anchor", "start")
-            .attr("alignment-baseline", "hanging")
-            .style("display", d => (d.y1 - d.y0) > 20 ? "block" : "none"); // Hide text if the rectangle is too short
+        // g.selectAll("text.value")
+        //     .data(root.leaves())
+        //     .join("text")
+        //     .attr("class", "value")
+        //     .attr("x", d => d.x0 + 5)
+        //     .attr("y", d => d.y0 + 35)
+        //     .text(d => d.data.value)
+        //     .attr("font-size", d => Math.min(12, (d.x1 - d.x0) / 3)) // Adjust font size based on rectangle width
+        //     .attr("fill", "black") // Changed for better legibility
+        //     .attr("text-anchor", "start")
+        //     .attr("alignment-baseline", "hanging")
+        //     .style("display", d => (d.y1 - d.y0) > 20 ? "block" : "none"); // Hide text if the rectangle is too short
 
 
     }, [data, width, height, margin, regionName]); // Add regionName as a dependency
