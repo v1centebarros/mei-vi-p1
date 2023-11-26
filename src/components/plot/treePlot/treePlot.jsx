@@ -97,21 +97,6 @@ export const TreePlot = ({data, width, height, margin, regionName}) => {
             .attr("alignment-baseline", "hanging")
             .style("display", d => (d.x1 - d.x0) > d.data.name.length * 8 ? "block" : "none"); // Hide text if it doesn't fit
 
-        // Adding values as text (optional)
-        // g.selectAll("text.value")
-        //     .data(root.leaves())
-        //     .join("text")
-        //     .attr("class", "value")
-        //     .attr("x", d => d.x0 + 5)
-        //     .attr("y", d => d.y0 + 35)
-        //     .text(d => d.data.value)
-        //     .attr("font-size", d => Math.min(12, (d.x1 - d.x0) / 3)) // Adjust font size based on rectangle width
-        //     .attr("fill", "black") // Changed for better legibility
-        //     .attr("text-anchor", "start")
-        //     .attr("alignment-baseline", "hanging")
-        //     .style("display", d => (d.y1 - d.y0) > 20 ? "block" : "none"); // Hide text if the rectangle is too short
-
-
     }, [data, width, height, margin, regionName]); // Add regionName as a dependency
 
     return <svg ref={svgRef} width={width} height={height}></svg>;
