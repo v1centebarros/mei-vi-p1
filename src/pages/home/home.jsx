@@ -9,6 +9,8 @@ import {ScatterPlot} from "../../components/plot/scatterPlot/index.js";
 import {Histogram} from "../../components/plot/histogram/index.js";
 import {SpiderPlot} from "../../components/plot/spiderPlot/index.js";
 import {TreePlot} from "../../components/plot/treePlot/index.js";
+import {ForcePieChart} from "../../components/plot/forcePieChart/index.js";
+import {GunfirePieChart} from "../../components/plot/gunfirePieChart/index.js";
 
 export const Home = (props) => {
 
@@ -47,7 +49,7 @@ export const Home = (props) => {
     }, [data])
 
     return <div className={"grid grid-cols-10 gap-3 p-3"}>
-        <div className={"col-span-2 row-span-2 "}>
+        <div className={"col-span-2 row-span-4 "}>
             <div className={"card bg-base-100 shadow"}>
                 <div className={"card-body"}>
                     <div className={"card-title mx-auto text-3xl"}>Filters</div>
@@ -122,13 +124,27 @@ export const Home = (props) => {
         </Card>
 
         <Card title={"teste4"}>
-            <select className="select select-bordered" onChange={(e) => setRegion(e.target.value)}>
+            <select className="select select-bordered max-w-xs" onChange={(e) => setRegion(e.target.value)}>
                 <option value={"West Bank"}>West Bank</option>
                 <option value={"Gaza Strip"}>Gaza Strip</option>
                 <option value={"Israel"}>Israel</option>
             </select>
             <ResponsiveWrapper>
                 {({width, height}) => <TreePlot data={filteredData} width={width} height={height} margin={MARGIN} regionName={region}/>}
+            </ResponsiveWrapper>
+        </Card>
+
+        <Card title={"Force Pie Chart"}>
+            <ResponsiveWrapper>
+                {({ width, height }) => <ForcePieChart data={data} width={width} height={height} margin={MARGIN}
+                                                       selectedYear={2013} />}
+            </ResponsiveWrapper>
+        </Card>
+
+        <Card title={"Gunfire Pie Chart"}>
+            <ResponsiveWrapper>
+                {({ width, height }) => <GunfirePieChart data={data} width={width} height={height} margin={MARGIN}
+                                                         selectedYear={2013} />}
             </ResponsiveWrapper>
         </Card>
     </div>
