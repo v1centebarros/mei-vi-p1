@@ -10,7 +10,6 @@ import {Histogram} from "../../components/plot/histogram/index.js";
 import {SpiderPlot} from "../../components/plot/spiderPlot/index.js";
 import {TreePlot} from "../../components/plot/treePlot/index.js";
 import {ForcePieChart} from "../../components/plot/forcePieChart/index.js";
-import {GunfirePieChart} from "../../components/plot/gunfirePieChart/index.js";
 import {GunfireBarChart} from "../../components/plot/gunfireBarChart/index.js";
 
 export const Home = (props) => {
@@ -30,7 +29,6 @@ export const Home = (props) => {
     const injuryRef = useRef(null);
     const startDateRef = useRef(null);
     const endDateRef = useRef(null);
-
 
 
     const {data} = useData()
@@ -60,19 +58,19 @@ export const Home = (props) => {
     const filterByStartDate = (row) => startDate === "" || row.date_of_event >= startDate
     const filterByEndDate = (row) => endDate === "" || row.date_of_event <= endDate
 
-    const filterData = () => data && setFilteredData(() => data.filter((row) => filterByCitizenship(row) && filterByGender(row) &&  filterByKilledBy(row) && filterByInjury(row) && filterByStartDate(row) && filterByEndDate(row), []))
+    const filterData = () => data && setFilteredData(() => data.filter((row) => filterByCitizenship(row) && filterByGender(row) && filterByKilledBy(row) && filterByInjury(row) && filterByStartDate(row) && filterByEndDate(row), []))
 
 
     useEffect(() => {
         filterData()
-    }, [citizenship, gender, killedBy, injury,startDate,endDate])
+    }, [citizenship, gender, killedBy, injury, startDate, endDate])
 
     useEffect(() => {
         setFilteredData(() => data)
     }, [data])
 
-    return <div className={"grid grid-cols-10 gap-3 p-3"}>
-        <div className={"col-span-2 row-span-4 "}>
+    return <div className={"grid grid-cols-10 h-full gap-x-4 lg:overflow-y-hidden gap-y-2 lg:gap-y-0 mx-2"} id={"container"}>
+        <div className={"col-span-full lg:col-span-2"}>
             <div className={"card bg-base-100 shadow"}>
                 <div className={"card-body"}>
                     <div className={"card-title mx-auto text-3xl"}>Filters</div>
@@ -81,7 +79,9 @@ export const Home = (props) => {
                             <label className="label">
                                 <span className="label-text font-bold text-xl">Citizenship</span>
                             </label>
-                            <select className="select select-bordered" onChange={(e) => setCitizenship(e.target.value)} ref={citizenshipRef}>
+                            <select className="select select-bordered"
+                                    onChange={(e) => setCitizenship(e.target.value)}
+                                    ref={citizenshipRef}>
                                 <option value={"all"}>All</option>
                                 <option value={"Israeli"}>Israeli</option>
                                 <option value={"Palestinian"}>Palestinian</option>
@@ -90,7 +90,8 @@ export const Home = (props) => {
                             <label className="label">
                                 <span className="label-text font-bold text-xl">Gender</span>
                             </label>
-                            <select className="select select-bordered" onChange={(e) => setGender(e.target.value)} ref={genderRef}>
+                            <select className="select select-bordered" onChange={(e) => setGender(e.target.value)}
+                                    ref={genderRef}>
                                 <option value={"all"}>All</option>
                                 <option value={"M"}>Male</option>
                                 <option value={"F"}>Female</option>
@@ -100,7 +101,8 @@ export const Home = (props) => {
                             <label className="label">
                                 <span className="label-text font-bold text-xl">Killed By</span>
                             </label>
-                            <select className="select select-bordered" onChange={(e) => setKilledBy(e.target.value)} ref={killedByRef}>
+                            <select className="select select-bordered" onChange={(e) => setKilledBy(e.target.value)}
+                                    ref={killedByRef}>
                                 <option value={"all"}>All</option>
                                 <option value="Israeli security forces">Israeli security forces</option>
                                 <option value="Palestinian civilians">Palestinian civilians</option>
@@ -110,7 +112,8 @@ export const Home = (props) => {
                             <label className="label">
                                 <span className="label-text font-bold text-xl">Type of Injury</span>
                             </label>
-                            <select className="select select-bordered" onChange={(e) => setInjury(e.target.value)} ref={injuryRef}>
+                            <select className="select select-bordered" onChange={(e) => setInjury(e.target.value)}
+                                    ref={injuryRef}>
                                 <option value="all">All</option>
                                 <option value="gunfire">Gunfire</option>
                                 <option value="stabbing">Stabbing</option>
@@ -130,12 +133,14 @@ export const Home = (props) => {
                             <label className="label">
                                 <span className="label-text font-bold text-xl">Start Date</span>
                             </label>
-                            <input type="date" className="input input-bordered" onChange={(e) => setStartDate(e.target.value)} ref={startDateRef}/>
+                            <input type="date" className="input input-bordered"
+                                   onChange={(e) => setStartDate(e.target.value)} ref={startDateRef}/>
 
                             <label className="label">
                                 <span className="label-text font-bold text-xl">End Date</span>
                             </label>
-                            <input type="date" className="input input-bordered" onChange={(e) => setEndDate(e.target.value)} ref={endDateRef}/>
+                            <input type="date" className="input input-bordered"
+                                   onChange={(e) => setEndDate(e.target.value)} ref={endDateRef}/>
 
                         </div>
 
@@ -147,59 +152,67 @@ export const Home = (props) => {
                 </div>
             </div>
         </div>
-        <Card title={"Fatalities over Time"}>
-            <ResponsiveWrapper>
-                {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height} margin={DEFAULT_MARGIN}/>}
-            </ResponsiveWrapper>
-        </Card>
-        <Card title={"Age Distribution of Fatalities"}>
-            <ResponsiveWrapper>
-                {({ width, height }) => <ScatterPlot data={filteredData} width={width} height={height} margin={DEFAULT_MARGIN} />}
-            </ResponsiveWrapper>
-        </Card>
-        <Card title={"Fatalities Record"}>
-            <Table data={filteredData}/>
-        </Card>
-        <Card title={"Age and Gender Distribution of Fatalities"}>
-            <ResponsiveWrapper>
-                {({width, height}) => <Histogram data={filteredData} width={width} height={height} margin={DEFAULT_MARGIN}/>}
-            </ResponsiveWrapper>
-        </Card>
+        <div className={"col-span-full lg:col-span-8 grid grid-cols-4 lg:overflow-y-auto gap-2"}>
+            <Card title={"Fatalities over Time"}>
+                <ResponsiveWrapper>
+                    {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height}
+                                                         margin={DEFAULT_MARGIN}/>}
+                </ResponsiveWrapper>
+            </Card>
+            <Card title={"Age Distribution of Fatalities"}>
+                <ResponsiveWrapper>
+                    {({width, height}) => <ScatterPlot data={filteredData} width={width} height={height}
+                                                       margin={DEFAULT_MARGIN}/>}
+                </ResponsiveWrapper>
+            </Card>
+            <Card title={"Fatalities Record"}>
+                <Table data={filteredData}/>
+            </Card>
+            <Card title={"Age and Gender Distribution of Fatalities"}>
+                <ResponsiveWrapper>
+                    {({width, height}) => <Histogram data={filteredData} width={width} height={height}
+                                                     margin={DEFAULT_MARGIN}/>}
+                </ResponsiveWrapper>
+            </Card>
 
 
-        <Card title={"Distribution of Fatalities by Region"}>
-            <ResponsiveWrapper>
-                {({width, height}) => <SpiderPlot data={filteredData} width={width} height={height}/>}
-            </ResponsiveWrapper>
-        </Card>
+            <Card title={"Distribution of Fatalities by Region"}>
+                <ResponsiveWrapper>
+                    {({width, height}) => <SpiderPlot data={filteredData} width={width} height={height}/>}
+                </ResponsiveWrapper>
+            </Card>
 
-        <Card title={"Distribution of Fatalities by City"}>
-            <select className="select select-bordered max-w-xs" onChange={(e) => setRegion(e.target.value)}>
-                <option value={"West Bank"}>West Bank</option>
-                <option value={"Gaza Strip"}>Gaza Strip</option>
-                <option value={"Israel"}>Israel</option>
-            </select>
-            <ResponsiveWrapper>
-                {({width, height}) => <TreePlot data={filteredData} width={width} height={height} margin={NON_LINE_MARGIN} regionName={region}/>}
-            </ResponsiveWrapper>
-        </Card>
+            <Card title={"Distribution of Fatalities by City"}>
+                <select className="select select-bordered max-w-xs" onChange={(e) => setRegion(e.target.value)}>
+                    <option value={"West Bank"}>West Bank</option>
+                    <option value={"Gaza Strip"}>Gaza Strip</option>
+                    <option value={"Israel"}>Israel</option>
+                </select>
+                <ResponsiveWrapper>
+                    {({width, height}) => <TreePlot data={filteredData} width={width} height={height}
+                                                    margin={NON_LINE_MARGIN} regionName={region}/>}
+                </ResponsiveWrapper>
+            </Card>
 
-        <Card title={"Fatalities distribution by the Military Forces"}>
-            <ResponsiveWrapper>
-                {({ width, height }) => <ForcePieChart data={filteredData} width={width} height={height} margin={DEFAULT_MARGIN}/>}
-            </ResponsiveWrapper>
-        </Card>
+            <Card title={"Fatalities distribution by the Military Forces"}>
+                <ResponsiveWrapper>
+                    {({width, height}) => <ForcePieChart data={filteredData} width={width} height={height}
+                                                         margin={DEFAULT_MARGIN}/>}
+                </ResponsiveWrapper>
+            </Card>
 
-        {/*<Card title={"Types of Weaponry Used in the Conflict"}>*/}
-        {/*    <ResponsiveWrapper>*/}
-        {/*        {({ width, height }) => <GunfirePieChart data={filteredData} width={width} height={height} margin={NON_LINE_MARGIN}/>}*/}
-        {/*    </ResponsiveWrapper>*/}
-        {/*</Card>*/}
+            {/*<Card title={"Types of Weaponry Used in the Conflict"}>*/}
+            {/*    <ResponsiveWrapper>*/}
+            {/*        {({ width, height }) => <GunfirePieChart data={filteredData} width={width} height={height} margin={NON_LINE_MARGIN}/>}*/}
+            {/*    </ResponsiveWrapper>*/}
+            {/*</Card>*/}
 
-        <Card title={"Types of Weaponry Used in the Conflict"}>
-            <ResponsiveWrapper>
-                {({ width, height }) => <GunfireBarChart data={filteredData} width={width} height={height} margin={BAR_PLOT_MARGIN}/>}
-            </ResponsiveWrapper>
-        </Card>
+            <Card title={"Types of Weaponry Used in the Conflict"}>
+                <ResponsiveWrapper>
+                    {({width, height}) => <GunfireBarChart data={filteredData} width={width} height={height}
+                                                           margin={BAR_PLOT_MARGIN}/>}
+                </ResponsiveWrapper>
+            </Card>
+        </div>
     </div>
 };

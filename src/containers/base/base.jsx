@@ -2,8 +2,10 @@ import {Outlet} from "react-router-dom";
 import {Navbar} from "../../components/navbar/index.js";
 
 export const Base = (props) => {
-    return <div className="bg-slate-400 h-full min-h-screen" id={"container"}>
+    return <div className="min-h-screen">
         <Navbar/>
-        <Outlet/>
+        <div className={"h-full lg:h-screen lg:max-h-screen pt-24 bg-slate-400"}>
+            <Outlet/>
+        </div>
     </div>;
 };
