@@ -80,7 +80,7 @@ export const TreePlot = ({data, width, height, margin, regionName}) => {
             })
             // Make div disappear
             .on("mouseout", function () {
-                return tooltip.style("visibility", "hidden").style("top", "0px").style("left", "0px");
+                return tooltip.style("visibility", "hidden")
             });
 
         // Adding text labels only if they fit in the rectangle
