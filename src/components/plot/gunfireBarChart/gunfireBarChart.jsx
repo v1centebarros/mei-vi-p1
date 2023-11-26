@@ -58,7 +58,7 @@ export const GunfireBarChart = ({ data, width, height, margin }) => {
         })
         // Make div disappear
         .on("mouseout", function () {
-          return tooltip.style("visibility", "hidden");
+          return tooltip.style("visibility", "hidden").style("top", "0px").style("left", "0px");
         });
 
 

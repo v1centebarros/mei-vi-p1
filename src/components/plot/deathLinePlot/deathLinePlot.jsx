@@ -66,7 +66,9 @@ export const DeathLinePlot = ({data, width, height, margin}) => {
             })
             // Make div disappear
             .on("mouseout", function () {
-                return tooltip.style("visibility", "hidden");
+                //set tooltip position on top and hide
+                return tooltip.style("visibility", "hidden")
+
             });
         // Add labels
         g.append("text")
