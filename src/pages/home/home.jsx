@@ -37,12 +37,14 @@ export const Home = (props) => {
 
     const filterByKilledBy = (row) => killedBy === "all" || row.killed_by === killedBy
 
-    const filterData = () => data && setFilteredData(() => data.filter((row) => filterByCitizenship(row) && filterByGender(row), []))
+    const filterByInjury = (row) => injury === "all" || row.type_of_injury === injury
+
+    const filterData = () => data && setFilteredData(() => data.filter((row) => filterByCitizenship(row) && filterByGender(row) &&  filterByKilledBy(row) && filterByInjury(row), []))
 
 
     useEffect(() => {
         filterData()
-    }, [citizenship, gender])
+    }, [citizenship, gender, killedBy, injury])
 
     useEffect(() => {
         setFilteredData(() => data)
@@ -79,6 +81,9 @@ export const Home = (props) => {
                             </label>
                             <select className="select select-bordered" onChange={(e) => setKilledBy(e.target.value)}>
                                 <option value={"all"}>All</option>
+                                <option value="Israeli security forces">Israeli security forces</option>
+                                <option value="Palestinian civilians">Palestinian civilians</option>
+                                <option value="Israeli civilians">Israeli civilians</option>
                             </select>
 
                             <label className="label">
@@ -86,6 +91,20 @@ export const Home = (props) => {
                             </label>
                             <select className="select select-bordered" onChange={(e) => setInjury(e.target.value)}>
                                 <option value={"all"}>Injury</option>
+                                <option value="all">All</option>
+                                <option value="gunfire">Gunfire</option>
+                                <option value="stabbing">Stabbing</option>
+                                <option value="hit by a vehicle">Hit by a vehicle</option>
+                                <option value="explosion">Explosion</option>
+                                <option value="physical assault">Physical assault</option>
+                                <option value="shelling">Shelling</option>
+                                <option value="being bludgeoned with an axe">Being bludgeoned with an axe</option>
+                                <option value="physically assaulted">Physically assaulted</option>
+                                <option value="beating">Beating</option>
+                                <option value="stones throwing">Stones throwing</option>
+                                <option value="Strangulation">Strangulation</option>
+                                <option value="fire">Fire</option>
+                                <option value="house demolition">House demolition</option>
                             </select>
                         </div>
 
