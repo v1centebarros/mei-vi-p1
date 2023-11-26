@@ -8,8 +8,7 @@ export default function Router() {
     const router = createBrowserRouter([
         {
             path: '/', element: <Base/>, children: [
-                {path: '/', element: <Home/>},
-                {path: '/stats', element: <Stats/>}
+                {path: '/', element: <Home/>}
             ]
         },
         {path: '*', element: <p>404 Page</p>}
