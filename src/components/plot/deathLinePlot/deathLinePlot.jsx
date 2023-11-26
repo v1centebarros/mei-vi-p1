@@ -1,5 +1,5 @@
 import {useEffect, useRef} from 'react';
-import {boundsCalculator} from '../../../utils/utils';
+import {boundsCalculator, DEFAULT_COLOR} from '../../../utils/utils';
 import * as d3 from 'd3';
 
 export const DeathLinePlot = ({data, width, height, margin}) => {
@@ -41,7 +41,7 @@ export const DeathLinePlot = ({data, width, height, margin}) => {
         // Add the line
         g.append("path").datum(parsedData)
             .attr("fill", "none")
-            .attr("stroke", "steelblue")
+            .attr("stroke", DEFAULT_COLOR)
             .attr("stroke-width", 1.5)
             .attr("d", d3.line().x(d => x(d.date)).y(d => y(d.deaths)));
 
@@ -53,7 +53,7 @@ export const DeathLinePlot = ({data, width, height, margin}) => {
             .attr("cx", d => x(d.date))
             .attr("cy", d => y(d.deaths))
             .attr("r", 2) // Radius of the dots; adjust as needed
-            .attr("fill", "steelblue").on("mouseover", function () {
+            .attr("fill", DEFAULT_COLOR).on("mouseover", function () {
             return tooltip.style("visibility", "visible");
         })
             .on("mousemove", function (event, d) {

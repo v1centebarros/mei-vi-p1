@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { boundsCalculator } from '../../../utils/utils';
+import {boundsCalculator, DEFAULT_COLOR} from '../../../utils/utils';
 
 export const ScatterPlot = ({ data, width, height, margin}) => {
     const svgRef = useRef();
@@ -46,7 +46,7 @@ export const ScatterPlot = ({ data, width, height, margin}) => {
             .attr("cx", d => x(d.date_of_death))
             .attr("cy", d => y(d.age))
             .attr("r", 5)
-            .style("fill", "#69b3a2")
+            .style("fill", DEFAULT_COLOR)
             .style("opacity", 0.5);
 
 

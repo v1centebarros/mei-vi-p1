@@ -1,10 +1,9 @@
 import {useEffect, useRef} from 'react';
 import * as d3 from 'd3';
-import {boundsCalculator} from '../../../utils/utils';
+import {boundsCalculator, HISTOGRAM_COLORS} from '../../../utils/utils';
 
 export const Histogram = ({data, width, height, margin}) => {
     const svgRef = useRef();
-    const colors = {'M': "#1f77b4", 'F': "#e377c2"};
 
     useEffect(() => {
         if (!data) return;
@@ -49,7 +48,7 @@ export const Histogram = ({data, width, height, margin}) => {
             .attr("transform", d => `translate(${x(d.x0)},${y(d.length)})`)
             .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
             .attr("height", d => Math.max(0, boundsHeight - y(d.length)))
-            .style("fill", colors['M']);
+            .style("fill", HISTOGRAM_COLORS['M']);
 
         g.selectAll(".bar.female")
             .data(binsFemale)
@@ -58,7 +57,7 @@ export const Histogram = ({data, width, height, margin}) => {
             .attr("transform", d => `translate(${x(d.x0)},${y(d.length)})`)
             .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
             .attr("height", d => Math.max(0, boundsHeight - y(d.length)))
-            .style("fill", colors['F']);
+            .style("fill", HISTOGRAM_COLORS['F']);
 
         // Add labels
         g.append("text")
@@ -76,7 +75,7 @@ export const Histogram = ({data, width, height, margin}) => {
             .attr("text-anchor", "end")
             .style("font", "12px sans-serif")
             .selectAll("g")
-            .data(Object.keys(colors))
+            .data(Object.keys(HISTOGRAM_COLORS))
             .join("g")
             .attr("transform", (d, i) => `translate(0,${i * 20})`);
 
@@ -84,7 +83,7 @@ export const Histogram = ({data, width, height, margin}) => {
             .attr("x", -19)
             .attr("width", 19)
             .attr("height", 19)
-            .attr("fill", d => colors[d]);
+            .attr("fill", d => HISTOGRAM_COLORS[d]);
 
         legend.append("text")
             .attr("x", -24)

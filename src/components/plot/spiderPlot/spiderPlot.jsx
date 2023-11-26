@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import {INNER_RADIUS, SpiderGrid} from "./grid.jsx";
 import React, { useEffect, useState } from "react";
+import {DEFAULT_COLOR} from "../../../utils/utils.js";
 
 const MARGIN = 30;
 
@@ -62,9 +63,9 @@ export const SpiderPlot = ({data, width, height}) => {
                 />}
                 <path
                     d={svgElements.linePath}
-                    stroke={'#cb1dd1'}
+                    stroke={DEFAULT_COLOR}
                     strokeWidth={3}
-                    fill={'#cb1dd1'}
+                    fill={DEFAULT_COLOR}
                     fillOpacity={0.1}
                 />
             </g>
