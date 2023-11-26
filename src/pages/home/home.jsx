@@ -90,7 +90,6 @@ export const Home = (props) => {
                                 <span className="label-text font-bold text-xl">Killed By</span>
                             </label>
                             <select className="select select-bordered" onChange={(e) => setInjury(e.target.value)}>
-                                <option value={"all"}>Injury</option>
                                 <option value="all">All</option>
                                 <option value="gunfire">Gunfire</option>
                                 <option value="stabbing">Stabbing</option>
