@@ -146,12 +146,12 @@ export const Home = (props) => {
                 </div>
             </div>
         </div>
-        <Card title={"teste1"}>
+        <Card title={"Fatalities over Time"}>
             <ResponsiveWrapper>
                 {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height} margin={MARGIN}/>}
             </ResponsiveWrapper>
         </Card>
-        <Card title={"Scatter Plot"}>
+        <Card title={"Age Distribution of Fatalities"}>
             <ResponsiveWrapper>
                 {({ width, height }) => <ScatterPlot data={filteredData} width={width} height={height} margin={MARGIN} />}
             </ResponsiveWrapper>
@@ -159,20 +159,20 @@ export const Home = (props) => {
         <Card title={"Data Table"}>
             <Table data={filteredData}/>
         </Card>
-        <Card title={"teste4"}>
+        <Card title={"Age and Gender Distribution of Fatalities"}>
             <ResponsiveWrapper>
                 {({width, height}) => <Histogram data={filteredData} width={width} height={height} margin={MARGIN}/>}
             </ResponsiveWrapper>
         </Card>
 
 
-        <Card title={"teste4"}>
+        <Card title={"Distribution of Fatalities by Region"}>
             <ResponsiveWrapper>
                 {({width, height}) => <SpiderPlot data={filteredData} width={width} height={height}/>}
             </ResponsiveWrapper>
         </Card>
 
-        <Card title={"teste4"}>
+        <Card title={"Distribution of Fatalities by City"}>
             <select className="select select-bordered max-w-xs" onChange={(e) => setRegion(e.target.value)}>
                 <option value={"West Bank"}>West Bank</option>
                 <option value={"Gaza Strip"}>Gaza Strip</option>
@@ -183,17 +183,15 @@ export const Home = (props) => {
             </ResponsiveWrapper>
         </Card>
 
-        <Card title={"Force Pie Chart"}>
+        <Card title={"Fatalities distribution by the Military Forces"}>
             <ResponsiveWrapper>
-                {({ width, height }) => <ForcePieChart data={data} width={width} height={height} margin={MARGIN}
-                                                       selectedYear={2013} />}
+                {({ width, height }) => <ForcePieChart data={filteredData} width={width} height={height} margin={MARGIN}/>}
             </ResponsiveWrapper>
         </Card>
 
-        <Card title={"Gunfire Pie Chart"}>
+        <Card title={"Types of Weaponry Used in the Conflict"}>
             <ResponsiveWrapper>
-                {({ width, height }) => <GunfirePieChart data={data} width={width} height={height} margin={MARGIN}
-                                                         selectedYear={2013} />}
+                {({ width, height }) => <GunfirePieChart data={filteredData} width={width} height={height} margin={MARGIN}/>}
             </ResponsiveWrapper>
         </Card>
     </div>

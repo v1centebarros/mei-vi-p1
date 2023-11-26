@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-export const ForcePieChart = ({ data, selectedYear, width,height,margin }) => {
+export const ForcePieChart = ({ data, width,height,margin }) => {
   const svgRef = useRef();
   const radius = Math.min(width, height) / 2; // Radius of the pie chart
   const legendRectSize = 20; // Defines the size of the legend color box
@@ -10,13 +10,8 @@ export const ForcePieChart = ({ data, selectedYear, width,height,margin }) => {
   useEffect(() => {
     if (!data) return;
 
-    // Filter the data based on the selected year
-    const yearData = data.filter(d =>
-        d.date_of_death && new Date(d.date_of_death).getFullYear() === selectedYear
-    );
-
     // Prepare data for the 'Kills by Force' pie chart
-    const forceData = d3.rollups(yearData, v => v.length, d => d.killed_by)
+    const forceData = d3.rollups(data, v => v.length, d => d.killed_by)
         .map(([key, value]) => ({ force: key, count: value }));
 
     // Color scale
@@ -71,11 +66,9 @@ export const ForcePieChart = ({ data, selectedYear, width,height,margin }) => {
         .attr('y', legendRectSize - legendSpacing)
         .text(d => forceData[d].force);
 
-  }, [data, selectedYear, width, height]);
+  }, [data, width, height]);
 
   return (
-      <svg ref={svgRef} width={width} height={height}>
-        <title>Kills by Force - {selectedYear}</title>
-      </svg>
+      <svg ref={svgRef} width={width} height={height}></svg>
   );
 };

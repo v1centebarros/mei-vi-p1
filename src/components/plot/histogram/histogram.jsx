@@ -62,7 +62,7 @@ export const Histogram = ({data, width, height, margin}) => {
 
         // Add labels
         g.append("text")
-            .attr("transform", `translate(${width / 2},${height - margin.bottom / 2})`)
+            .attr("transform", `translate(${boundsWidth / 2},${(height - margin.bottom / 3)})`)
             .text("Age");
 
         // Add labels

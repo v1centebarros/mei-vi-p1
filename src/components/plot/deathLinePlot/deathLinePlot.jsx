@@ -45,7 +45,7 @@ export const DeathLinePlot = ({data, width, height, margin}) => {
             .attr("d", d3.line().x(d => x(d.date)).y(d => y(d.deaths)));
         // Add labels
         g.append("text")
-            .attr("transform", `translate(${width / 2},${(height - margin.bottom / 3)})`)
+            .attr("transform", `translate(${width / 3},${(height - margin.bottom / 3)})`)
             .text("Date of the event");
 
         // Add labels

@@ -52,8 +52,8 @@ export const ScatterPlot = ({ data, width, height, margin}) => {
 
         // Add labels
         g.append("text")
-            .attr("transform", `translate(${width / 2},${(height - margin.bottom / 3)})`)
-            .text("Year");
+            .attr("transform", `translate(${width / 3},${(height - margin.bottom / 3)})`)
+            .text("Date of the Event");
 
         // Add labels
         g.append("text")
