@@ -20,11 +20,16 @@ export const Home = (props) => {
     const [killedBy, setKilledBy] = useState("all")
     const [injury, setInjury] = useState("all")
     const [region, setRegion] = useState("West Bank")
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
 
     const citizenshipRef = useRef(null);
     const genderRef = useRef(null);
     const killedByRef = useRef(null);
     const injuryRef = useRef(null);
+    const startDateRef = useRef(null);
+    const endDateRef = useRef(null);
+
 
 
     const {data} = useData()
@@ -40,6 +45,8 @@ export const Home = (props) => {
         genderRef.current.value = "all"
         killedByRef.current.value = "all"
         injuryRef.current.value = "all"
+        startDateRef.current.value = ""
+        endDateRef.current.value = ""
     }
 
     const filterByCitizenship = (row) => citizenship === "all" || row.citizenship === citizenship
@@ -49,12 +56,15 @@ export const Home = (props) => {
 
     const filterByInjury = (row) => injury === "all" || row.type_of_injury === injury
 
-    const filterData = () => data && setFilteredData(() => data.filter((row) => filterByCitizenship(row) && filterByGender(row) &&  filterByKilledBy(row) && filterByInjury(row), []))
+    const filterByStartDate = (row) => startDate === "" || row.date_of_event >= startDate
+    const filterByEndDate = (row) => endDate === "" || row.date_of_event <= endDate
+
+    const filterData = () => data && setFilteredData(() => data.filter((row) => filterByCitizenship(row) && filterByGender(row) &&  filterByKilledBy(row) && filterByInjury(row) && filterByStartDate(row) && filterByEndDate(row), []))
 
 
     useEffect(() => {
         filterData()
-    }, [citizenship, gender, killedBy, injury])
+    }, [citizenship, gender, killedBy, injury,startDate,endDate])
 
     useEffect(() => {
         setFilteredData(() => data)
@@ -115,6 +125,17 @@ export const Home = (props) => {
                                 <option value="fire">Fire</option>
                                 <option value="house demolition">House demolition</option>
                             </select>
+
+                            <label className="label">
+                                <span className="label-text font-bold text-xl">Start Date</span>
+                            </label>
+                            <input type="date" className="input input-bordered" onChange={(e) => setStartDate(e.target.value)} ref={startDateRef}/>
+
+                            <label className="label">
+                                <span className="label-text font-bold text-xl">End Date</span>
+                            </label>
+                            <input type="date" className="input input-bordered" onChange={(e) => setEndDate(e.target.value)} ref={endDateRef}/>
+
                         </div>
 
                         <button className={"btn btn-primary btn-block"}
