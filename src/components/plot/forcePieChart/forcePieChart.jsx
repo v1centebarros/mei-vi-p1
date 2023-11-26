@@ -31,7 +31,7 @@ export const ForcePieChart = ({data, width, height, margin}) => {
         const g = svg.append('g')
             .attr('transform', `translate(${radius}, ${height / 2})`);
 
-        const tooltip = d3.select("body").append("div").attr("class", "tooltip");
+        const tooltip = d3.select("#container").append("div").attr("class", "tooltip");
 
         // Draw the pie chart
         g.selectAll('path')

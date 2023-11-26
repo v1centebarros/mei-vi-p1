@@ -56,7 +56,7 @@ export const TreePlot = ({data, width, height, margin, regionName}) => {
 
         const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-        const tooltip = d3.select("body").append("div").attr("class", "tooltip");
+        const tooltip = d3.select("#container").append("div").attr("class", "tooltip");
 
 
         // Drawing rectangles for each node

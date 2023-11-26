@@ -20,7 +20,7 @@ export const DeathLinePlot = ({data, width, height, margin}) => {
 
         // Format the data
         const parseDate = d3.timeParse("%Y-%m-%d");
-        const tooltip = d3.select("body").append("div").attr("class", "tooltip");
+        const tooltip = d3.select("#container").append("div").attr("class", "tooltip");
 
         // Aggregate the number of deaths by month
         const parsedData = d3.groups(data, d => d3.timeMonth(parseDate(d.date_of_event)))

@@ -32,7 +32,7 @@ export const GunfireBarChart = ({ data, width, height, margin }) => {
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove(); // Clear previous SVG contents
 
-    const tooltip = d3.select("body").append("div").attr("class", "tooltip");
+    const tooltip = d3.select("#container").append("div").attr("class", "tooltip");
 
     // Draw the bars
     svg.selectAll('.bar')
