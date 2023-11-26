@@ -157,7 +157,7 @@ export const Home = (props) => {
                 {({ width, height }) => <ScatterPlot data={filteredData} width={width} height={height} margin={DEFAULT_MARGIN} />}
             </ResponsiveWrapper>
         </Card>
-        <Card title={"Data Table"}>
+        <Card title={"Fatalities Record"}>
             <Table data={filteredData}/>
         </Card>
         <Card title={"Age and Gender Distribution of Fatalities"}>
