@@ -49,11 +49,11 @@ export const ScatterPlot = ({ data, width, height, margin}) => {
             .style("fill", "#69b3a2")
             .style("opacity", 0.5);
 
+
         // Add labels
         g.append("text")
-            .attr("transform", `translate(${width / 2},${height + margin.bottom})`)
-            .text("Date of Death");
-
+            .attr("transform", `translate(${width / 2},${(height - margin.bottom / 3)})`)
+            .text("Year");
 
         // Add labels
         g.append("text")

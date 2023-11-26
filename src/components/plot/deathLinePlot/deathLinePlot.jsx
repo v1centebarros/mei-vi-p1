@@ -45,14 +45,14 @@ export const DeathLinePlot = ({data, width, height, margin}) => {
             .attr("d", d3.line().x(d => x(d.date)).y(d => y(d.deaths)));
         // Add labels
         g.append("text")
-            .attr("transform", `translate(${width / 2},${height + margin.bottom})`)
-            .text("Date of Death");
+            .attr("transform", `translate(${width / 2},${(height - margin.bottom / 3)})`)
+            .text("Date of the event");
 
         // Add labels
         g.append("text")
             .attr("transform", `translate(-40,${height / 2}) rotate(-90)`)
             .style("text-anchor", "middle")
-            .text("Deaths");
+            .text("Number of Fatalities");
 
     }, [data, width, height]); // Dependency array includes width and height
 
