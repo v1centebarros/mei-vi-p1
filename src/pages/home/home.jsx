@@ -11,6 +11,7 @@ import {SpiderPlot} from "../../components/plot/spiderPlot/index.js";
 import {TreePlot} from "../../components/plot/treePlot/index.js";
 import {ForcePieChart} from "../../components/plot/forcePieChart/index.js";
 import {GunfireBarChart} from "../../components/plot/gunfireBarChart/index.js";
+import {Modal} from "../../components/modal/index.js";
 
 export const Home = (props) => {
 
@@ -22,6 +23,8 @@ export const Home = (props) => {
     const [region, setRegion] = useState("West Bank")
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
+    const [modal, setModal] = useState({title: "", content: ""})
+
 
     const citizenshipRef = useRef(null);
     const genderRef = useRef(null);
@@ -71,7 +74,7 @@ export const Home = (props) => {
 
     return <div className={"grid grid-cols-10 h-full gap-x-4 lg:overflow-y-hidden gap-y-2 lg:gap-y-0 mx-2"} id={"container"}>
         <div className={"col-span-full lg:col-span-2"}>
-            <div className={"card bg-base-100 shadow"}>
+            <div className={"card bg-base-100"}>
                 <div className={"card-body"}>
                     <div className={"card-title mx-auto text-3xl"}>Filters</div>
                     <div className={"flex flex-col gap-2 m-5"}>
@@ -152,7 +155,7 @@ export const Home = (props) => {
                 </div>
             </div>
         </div>
-        <div className={"col-span-full lg:col-span-8 grid grid-cols-4 lg:overflow-y-auto gap-2"}>
+        <div className={"col-span-full lg:col-span-8 grid grid-cols-4 lg:overflow-y-auto gap-2 pb-3"}>
             <Card title={"Fatalities over Time"}>
                 <ResponsiveWrapper>
                     {({width, height}) => <DeathLinePlot data={filteredData} width={width} height={height}
@@ -175,13 +178,6 @@ export const Home = (props) => {
                 </ResponsiveWrapper>
             </Card>
 
-
-            <Card title={"Distribution of Fatalities by Region"}>
-                <ResponsiveWrapper>
-                    {({width, height}) => <SpiderPlot data={filteredData} width={width} height={height}/>}
-                </ResponsiveWrapper>
-            </Card>
-
             <Card title={"Distribution of Fatalities by City"}>
                 <select className="select select-bordered max-w-xs" onChange={(e) => setRegion(e.target.value)}>
                     <option value={"West Bank"}>West Bank</option>
@@ -191,6 +187,21 @@ export const Home = (props) => {
                 <ResponsiveWrapper>
                     {({width, height}) => <TreePlot data={filteredData} width={width} height={height}
                                                     margin={NON_LINE_MARGIN} regionName={region}/>}
+                </ResponsiveWrapper>
+            </Card>
+
+            <Card title={"Distribution of Fatalities by Region"}>
+                <ResponsiveWrapper>
+                    {({width, height}) => <SpiderPlot data={filteredData} width={width} height={height}/>}
+                </ResponsiveWrapper>
+            </Card>
+
+
+
+            <Card title={"Types of Weaponry Used in the Conflict"}>
+                <ResponsiveWrapper>
+                    {({width, height}) => <GunfireBarChart data={filteredData} width={width} height={height}
+                                                           margin={BAR_PLOT_MARGIN}/>}
                 </ResponsiveWrapper>
             </Card>
 
@@ -207,12 +218,8 @@ export const Home = (props) => {
             {/*    </ResponsiveWrapper>*/}
             {/*</Card>*/}
 
-            <Card title={"Types of Weaponry Used in the Conflict"}>
-                <ResponsiveWrapper>
-                    {({width, height}) => <GunfireBarChart data={filteredData} width={width} height={height}
-                                                           margin={BAR_PLOT_MARGIN}/>}
-                </ResponsiveWrapper>
-            </Card>
+
+            <Modal title={"teste"} content={"teste"}/>
         </div>
     </div>
 };
